@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterização Avançada - Com Preview e Controles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 Masterização Avançada</h1>
+            <p>Preview em tempo real • Waveforms • Controles personalizáveis</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                    <div class="target-music-section">
+                        <h3>🎵 Música para Masterizar</h3>
+                        <div class="file-upload">
+                            <label for="target_file">
+                                <div class="upload-area">
+                                    <div class="upload-icon">📁</div>
+                                    <h4>Selecione o arquivo que você quer masterizar</h4>
+                                    <p>Arraste ou clique para selecionar</p>
+                                    <span class="file-info">Formatos aceitos: WAV, MP3</span>
+                                </div>
+                            </label>
+                            <input type="file" id="target_file" name="target_file" accept=".wav,.mp3" required>
+                        </div>
+                    </div>
+
+                    <div class="reference-section" id="reference-step" style="display: none;">
+                        <h3>🎯 Referência de Masterização</h3>
+                        <p>Use um arquivo local ou uma URL do YouTube.</p>
+                        
+                        <div class="reference-buttons">
+                            <button type="button" id="btn-ref-file" class="ref-btn active">Arquivo de Referência</button>
+                            <button type="button" id="btn-ref-youtube" class="ref-btn">URL do YouTube</button>
+                        </div>
+                        
+                        <div id="reference-file-section">
+                            <div class="file-upload" id="file_upload_section">
+                                <label for="reference_file">
+                                    <div class="upload-area">
+                                        <div class="upload-icon">📁</div>
+                                        <h4>Arquivo de Referência</h4>
+                                        <p>Selecione uma música já masterizada</p>
+                                        <span class="file-info">Formatos aceitos: WAV, MP3</span>
+                                    </div>
+                                </label>
+                                <input type="file" id="reference_file" name="reference_file" accept=".wav,.mp3">
+                            </div>
+                        </div>
+
+                        <div id="reference-youtube-section" style="display:none;">
+                            <div class="youtube-input">
+                                <div class="input-group">
+                                    <label for="reference_input">URL do YouTube:</label>
+                                    <input type="url" id="reference_input" name="reference_input" placeholder="https://youtube.com/watch?v=..." class="youtube-url-input">
+                                    <small>Cole aqui a URL de qualquer vídeo do YouTube</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Processar Música</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <h2>🎛️ Controles de Masterização</h2>
+                
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <h3>Compressor</h3>
+                        <label><input type="checkbox" id="use_compressor" checked> Usar Compressor</label>
+                        <div class="slider-group">
+                            <label>Threshold (dB): <span id="compressor_threshold_value">-25</span></label>
+                            <input type="range" id="compressor_threshold" min="-50" max="0" value="-25" step="1">
+                        </div>
+                        <div class="slider-group">
+                            <label>Ratio: <span id="compressor_ratio_value">1.5</span></label>
+                            <input type="range" id="compressor_ratio" min="1" max="10" value="1.5" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3>Gain</h3>
+                        <div class="slider-group">
+                            <label>Gain (dB): <span id="gain_db_value">1.0</span></label>
+                            <input type="range" id="gain_db" min="-10" max="10" value="1" step="0.1">
+                        </div>
+                        <h3>Limiter</h3>
+                        <label><input type="checkbox" id="use_limiter" checked> Usar Limiter</label>
+                        <div class="slider-group">
+                            <label>Threshold (dB): <span id="limiter_threshold_value">-0.5</span></label>
+                            <input type="range" id="limiter_threshold" min="-5" max="0" value="-0.5" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="applyChangesBtn" class="apply-btn">
+                    <span class="btn-icon">🔄</span> Aplicar Mudanças
+                </button>
+
+                <div class="audio-preview-section">
+                    <h3>🎧 Preview de Áudio</h3>
+                    <div class="audio-grid">
+                        <div class="audio-item">
+                            <h4>Original</h4>
+                            <audio id="originalAudio" controls></audio>
+                        </div>
+                        <div class="audio-item">
+                            <h4>Masterizado</h4>
+                            <audio id="masteredAudio" controls></audio>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="waveform-section">
+                    <h3>📊 Visualização de Waveform</h3>
+                    <div class="waveform-grid">
+                        <div class="waveform-item">
+                            <h4>Original</h4>
+                            <img id="originalWaveform" class="waveform-img" alt="Waveform Original">
+                        </div>
+                        <div class="waveform-item">
+                            <h4>Masterizado</h4>
+                            <img id="masteredWaveform" class="waveform-img" alt="Waveform Masterizado">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-section">
+                    <h3>💾 Download</h3>
+                    <button id="downloadBtn" class="download-btn">
+                        <span class="btn-icon">⬇️</span> Baixar Arquivo Masterizado
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentParams = {};
+            let currentTargetPath = '';
+            let currentSessionId = '';
+            let finalOutputFilename = '';
+
+            const uploadForm = document.getElementById('uploadForm');
+            const targetFile_input = document.getElementById('target_file');
+            const referenceStep = document.getElementById('reference-step');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Habilitar o botão de processar apenas quando os arquivos necessários são selecionados
+            function validateForm() {
+                const targetFile = targetFile_input.files.length > 0;
+                const refFile = document.getElementById('reference_file').files.length > 0;
+                const refUrl = document.getElementById('reference_input').value.trim() !== '';
+                const isRefFileActive = document.getElementById('reference-file-section').style.display !== 'none';
+                
+                if (targetFile && ((isRefFileActive && refFile) || (!isRefFileActive && refUrl))) {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            }
+
+            // Mostrar nome do arquivo selecionado
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const fileName = this.files[0]?.name;
+                    const uploadArea = this.closest('.file-upload').querySelector('.upload-area');
+                    const fileInfo = uploadArea.querySelector('.file-info');
+                    if (fileName) {
+                        fileInfo.textContent = `Arquivo: ${fileName}`;
+                        uploadArea.classList.add('has-file');
+                    } else {
+                        fileInfo.textContent = `Formatos aceitos: WAV, MP3`;
+                        uploadArea.classList.remove('has-file');
+                    }
+                    validateForm();
+                });
+            });
+            
+            targetFile_input.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    referenceStep.style.display = 'block';
+                } else {
+                    referenceStep.style.display = 'none';
+                }
+                validateForm();
+            });
+
+            document.getElementById('reference_input').addEventListener('input', validateForm);
+
+            // Trocar entre as opções de referência
+            const btnRefFile = document.getElementById('btn-ref-file');
+            const btnRefYoutube = document.getElementById('btn-ref-youtube');
+            const refFileSection = document.getElementById('reference-file-section');
+            const refYoutubeSection = document.getElementById('reference-youtube-section');
+            const refUrlInput = document.getElementById('reference_input');
+            const refFileInput = document.getElementById('reference_file');
+
+            btnRefFile.addEventListener('click', () => {
+                refFileSection.style.display = 'block';
+                refYoutubeSection.style.display = 'none';
+                btnRefFile.classList.add('active');
+                btnRefYoutube.classList.remove('active');
+                refUrlInput.value = ''; // Limpa o input de URL
+                refUrlInput.required = false;
+                refFileInput.required = true;
+                validateForm();
+            });
+
+            btnRefYoutube.addEventListener('click', () => {
+                refFileSection.style.display = 'none';
+                refYoutubeSection.style.display = 'block';
+                btnRefFile.classList.remove('active');
+                btnRefYoutube.classList.add('active');
+                refFileInput.value = ''; // Limpa o input de file
+                refFileInput.required = false;
+                refUrlInput.required = true;
+                validateForm();
+            });
+            
+            // Envio do formulário com AJAX
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnIcon = submitBtn.querySelector('.btn-icon');
+                
+                submitBtn.disabled = true;
+                btnText.textContent = 'Processando...';
+                btnIcon.textContent = '⏳';
+                submitBtn.classList.add('loading');
+                
+                const formData = new FormData(this);
+
+                fetch('/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('resultsSection').style.display = 'block';
+                        
+                        document.getElementById('originalWaveform').src = 'data:image/png;base64,' + data.original_waveform;
+                        document.getElementById('masteredWaveform').src = 'data:image/png;base64,' + data.mastered_waveform;
+                        
+                        currentSessionId = data.session_id;
+                        finalOutputFilename = data.output_filename; // Salvar nome do arquivo final
+                        
+                        const originalAudio = document.getElementById('originalAudio');
+                        const masteredAudio = document.getElementById('masteredAudio');
+                        
+                        originalAudio.src = `/audio/original/${currentSessionId}?v=${new Date().getTime()}`;
+                        masteredAudio.src = `/audio/mastered/${currentSessionId}?v=${new Date().getTime()}`;
+                        
+                        currentParams = data.params;
+                        currentTargetPath = data.target_path;
+                        
+                        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        alert('Erro: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert('Erro de comunicação com o servidor.');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Processar Música';
+                    btnIcon.textContent = '⚡';
+                    submitBtn.classList.remove('loading');
+                    validateForm();
+                });
+            });
+
+            // Atualizar valores dos sliders
+            function updateSliderValues() {
+                document.getElementById('compressor_threshold_value').textContent = document.getElementById('compressor_threshold').value;
+                document.getElementById('compressor_ratio_value').textContent = document.getElementById('compressor_ratio').value;
+                document.getElementById('gain_db_value').textContent = document.getElementById('gain_db').value;
+                document.getElementById('limiter_threshold_value').textContent = document.getElementById('limiter_threshold').value;
+            }
+
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                slider.addEventListener('input', updateSliderValues);
+            });
+
+            // Aplicar mudanças
+            document.getElementById('applyChangesBtn').addEventListener('click', function() {
+                const btn = this;
+                const originalText = btn.innerHTML;
+                
+                btn.disabled = true;
+                btn.innerHTML = '<span class="btn-icon">⏳</span> Aplicando...';
+                
+                const params = {
+                    use_compressor: document.getElementById('use_compressor').checked,
+                    compressor_threshold: parseFloat(document.getElementById('compressor_threshold').value),
+                    compressor_ratio: parseFloat(document.getElementById('compressor_ratio').value),
+                    gain_db: parseFloat(document.getElementById('gain_db').value),
+                    use_limiter: document.getElementById('use_limiter').checked,
+                    limiter_threshold: parseFloat(document.getElementById('limiter_threshold').value),
+                };
+                
+                fetch('/masterize', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ params, target_path: currentTargetPath, session_id: currentSessionId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('masteredWaveform').src = 'data:image/png;base64,' + data.mastered_waveform;
+                        document.getElementById('masteredAudio').src = `/audio/mastered/${currentSessionId}?v=${new Date().getTime()}`;
+                        finalOutputFilename = data.output_filename; // Atualiza o nome do arquivo ao aplicar mudanças
+                        currentParams = params;
+                    } else {
+                        alert('Erro ao aplicar mudanças: ' + data.error);
+                    }
+                })
+                .catch(error => alert('Erro: ' + error))
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+            });
+
+            // Download do arquivo final
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                if(finalOutputFilename) {
+                    window.location.href = `/download/${finalOutputFilename}`;
+                } else {
+                    alert("Nenhum arquivo processado para baixar.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
