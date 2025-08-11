@@ -1,0 +1,8 @@
+flask
+librosa
+soundfile
+numpy
+matplotlib
+pedalboard
+werkzeug
+yt_dlp

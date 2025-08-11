@@ -92,6 +92,19 @@ header p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative; /* necessário */
+    overflow: hidden;   /* evita input escapar da área */
+}
+
+.upload-area input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 100;
 }
 
 .upload-area:hover {
