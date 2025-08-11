@@ -1,0 +1,16 @@
+# Ignore ambiente virtual
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de logs e DB
+*.log
+*.sqlite3
+
+# Configurações do sistema e IDEs
+.vscode/
+.idea/
+.DS_Store
