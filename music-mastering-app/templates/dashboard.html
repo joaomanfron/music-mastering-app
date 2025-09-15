@@ -1,0 +1,441 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% if current_user and current_user.is_authenticated %} - {{ current_user.nome }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+        {% if current_user and current_user.is_authenticated %}
+        <p class="welcome-message">Bem-vindo de volta, {{ current_user.nome }}!</p>
+        {% else %}
+        <p class="welcome-message">Dashboard do Sistema</p>
+        {% endif %}
+    </div>
+
+    <!-- Cards de Estatísticas -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3>{{ dashboard_data.tutorials_watched }}</h3>
+                <p>Tutoriais Assistidos</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="stat-content">
+                <h3>{{ dashboard_data.mastered_songs }}</h3>
+                <p>Músicas Masterizadas</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="stat-content">
+                <h3>{{ dashboard_data.downloads|length }}</h3>
+                <p>Downloads Realizados</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="stat-content">
+                <h3>{{ dashboard_data.ghost_requests|length }}</h3>
+                <p>Solicitações Ghost Producer</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seções do Dashboard -->
+    <div class="dashboard-sections">
+        <!-- Músicas Masterizadas Recentes -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2><i class="fas fa-music"></i> Músicas Masterizadas Recentes</h2>
+            </div>
+            <div class="section-content">
+                {% if dashboard_data.recent_masters %}
+                    <div class="masters-list">
+                        {% for master in dashboard_data.recent_masters %}
+                        <div class="master-item">
+                            <div class="master-info">
+                                <h4>{{ master[0]|replace('_', ' ')|title if master[0] else 'Arquivo não especificado' }}</h4>
+                                <p class="master-date">{{ master[2] if master[2] else 'Data não disponível' }}</p>
+                                <span class="status-badge status-{{ master[3] if master[3] else 'pending' }}">{{ (master[3] if master[3] else 'pending')|title }}</span>
+                            </div>
+                            <div class="master-actions">
+                                {% if master[1] %}
+                                <a href="{{ url_for('download', filename=master[1]) }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                {% else %}
+                                <span class="btn btn-secondary btn-sm disabled">
+                                    <i class="fas fa-exclamation-triangle"></i> Arquivo não disponível
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-music"></i>
+                        <p>Nenhuma música masterizada ainda</p>
+                        <a href="{{ url_for('masterizacao') }}" class="btn btn-primary">Começar Masterização</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Histórico de Downloads -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2><i class="fas fa-download"></i> Histórico de Downloads</h2>
+            </div>
+            <div class="section-content">
+                {% if dashboard_data.downloads %}
+                    <div class="downloads-list">
+                        {% for download in dashboard_data.downloads %}
+                        <div class="download-item">
+                            <div class="download-info">
+                                <h4>{{ download[1]|replace('_', ' ')|title if download[1] else 'Arquivo não especificado' }}</h4>
+                                <p class="download-date">{{ download[2] if download[2] else 'Data não disponível' }}</p>
+                                <span class="file-type-badge">{{ download[0]|title if download[0] else 'Tipo não especificado' }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-download"></i>
+                        <p>Nenhum download realizado ainda</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Solicitações de Ghost Producer -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2><i class="fas fa-user-tie"></i> Solicitações de Ghost Producer</h2>
+                <button class="btn btn-primary" onclick="openGhostProducerModal()">
+                    <i class="fas fa-plus"></i> Nova Solicitação
+                </button>
+            </div>
+            <div class="section-content">
+                {% if dashboard_data.ghost_requests %}
+                    <div class="ghost-requests-list">
+                        {% for request in dashboard_data.ghost_requests %}
+                        <div class="ghost-request-item" data-request-id="{{ request[0] }}">
+                            <div class="request-info">
+                                {% if request|length >= 9 %}
+                                    <!-- Nova estrutura com id, package e deadline -->
+                                    <div class="request-header">
+                                        <h4>{{ request[2]|title if request[2] else 'Gênero não especificado' }}</h4>
+                                        <span class="package-badge package-{{ request[1] }}">{{ request[1]|title if request[1] else 'Pacote' }}</span>
+                                    </div>
+                                    <p class="request-description">{{ request[3] if request[3] else 'Descrição não fornecida' }}</p>
+                                    {% if request[4] and request[4] != 'None' %}
+                                    <p class="request-budget">Orçamento: R$ {{ "%.2f"|format(request[4]|float) }}</p>
+                                    {% endif %}
+                                    {% if request[5] and request[5] == 'urgent' %}
+                                    <p class="request-deadline">
+                                        Prazo: Urgente + 20%
+                                    </p>
+                                    {% elif request[5] and request[5] != 'None' %}
+                                    <p class="request-deadline">Prazo: {{ request[5]|title }}</p>
+                                    {% endif %}
+                                    <span class="status-badge status-{{ request[6] }}">{{ request[6]|title if request[6] else 'Pendente' }}</span>
+                                {% else %}
+                                    <!-- Estrutura antiga (fallback) -->
+                                    <h4>{{ request[1]|title if request[1] else 'Gênero não especificado' }}</h4>
+                                    <p class="request-description">{{ request[2] if request[2] else 'Descrição não fornecida' }}</p>
+                                    {% if request[3] and request[3] != 'None' %}
+                                    <p class="request-budget">Orçamento: R$ {{ "%.2f"|format(request[3]|float) }}</p>
+                                    {% endif %}
+                                    <span class="status-badge status-{{ request[4] }}">{{ request[4]|title if request[4] else 'Pendente' }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="request-actions">
+                                <div class="request-date">
+                                    {% if request|length >= 9 %}
+                                        <p>{{ request[7] if request[7] and request[7] != 'None' else 'Data não disponível' }}</p>
+                                    {% else %}
+                                        <p>{{ request[5] if request[5] and request[5] != 'None' else 'Data não disponível' }}</p>
+                                    {% endif %}
+                                </div>
+                                <button class="btn btn-danger btn-sm" onclick="deleteGhostRequest({{ request[0] }})">
+                                    <i class="fas fa-trash"></i> Excluir
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-user-tie"></i>
+                        <p>Nenhuma solicitação de ghost producer</p>
+                        <button class="btn btn-primary" onclick="openGhostProducerModal()">
+                            <i class="fas fa-plus"></i> Fazer Primeira Solicitação
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Nova Solicitação de Ghost Producer -->
+<div id="ghostProducerModal" class="modal">
+    <div class="modal-content ghost-producer-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-tie"></i> Solicitar Ghost Producer</h3>
+            <span class="close" onclick="closeGhostProducerModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <!-- Seleção de Pacote -->
+            <div class="package-selection">
+                <h4>Escolha o pacote ideal para seu projeto:</h4>
+                
+                <div class="packages-grid">
+                    <div class="package-card" data-package="basico">
+                        <div class="package-header">
+                            <h3>🎵 Básico</h3>
+                            <div class="package-price">A partir de R$ 500</div>
+                        </div>
+                        <ul class="package-features">
+                            <li>✓ Música completa (3-4 minutos)</li>
+                            <li>✓ Mixagem básica</li>
+                            <li>✓ 2 revisões</li>
+                            <li>✓ Até 7 dias</li>
+                            <li>✓ Arquivos WAV e MP3</li>
+                        </ul>
+                        <div class="package-selector">
+                            <input type="radio" name="package" value="basico" id="pkg-basico">
+                            <label for="pkg-basico">Selecionar</label>
+                        </div>
+                    </div>
+
+                    <div class="package-card featured" data-package="profissional">
+                        <div class="package-badge">Mais Popular</div>
+                        <div class="package-header">
+                            <h3>🎛️ Profissional</h3>
+                            <div class="package-price">A partir de R$ 800</div>
+                        </div>
+                        <ul class="package-features">
+                            <li>✓ Música completa (3-5 minutos)</li>
+                            <li>✓ Mixagem profissional</li>
+                            <li>✓ Masterização básica</li>
+                            <li>✓ 3 revisões</li>
+                            <li>✓ Até 5 dias</li>
+                            <li>✓ Arquivos WAV, MP3 e stems</li>
+                            <li>✓ Consultoria musical</li>
+                        </ul>
+                        <div class="package-selector">
+                            <input type="radio" name="package" value="profissional" id="pkg-profissional" checked>
+                            <label for="pkg-profissional">Selecionar</label>
+                        </div>
+                    </div>
+
+                    <div class="package-card" data-package="premium">
+                        <div class="package-header">
+                            <h3>🏆 Premium</h3>
+                            <div class="package-price">A partir de R$ 1200</div>
+                        </div>
+                        <ul class="package-features">
+                            <li>✓ Música completa (3-6 minutos)</li>
+                            <li>✓ Mixagem premium</li>
+                            <li>✓ Masterização profissional</li>
+                            <li>✓ Revisões ilimitadas</li>
+                            <li>✓ Até 3 dias</li>
+                            <li>✓ Arquivos WAV, MP3, stems e projeto</li>
+                            <li>✓ Consultoria musical completa</li>
+                            <li>✓ Suporte prioritário</li>
+                        </ul>
+                        <div class="package-selector">
+                            <input type="radio" name="package" value="premium" id="pkg-premium">
+                            <label for="pkg-premium">Selecionar</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário de Solicitação -->
+            <form id="ghostProducerForm">
+                <div class="form-group">
+                    <label for="genre">Gênero Musical *</label>
+                    <select id="genre" name="genre" required>
+                        <option value="">Selecione um gênero</option>
+                        <option value="trap">Trap</option>
+                        <option value="drill">Drill</option>
+                        <option value="funk">Funk</option>
+                        <option value="sertanejo">Sertanejo</option>
+                        <option value="pop">Pop</option>
+                        <option value="rock">Rock</option>
+                        <option value="electronic">Electronic</option>
+                        <option value="hip-hop">Hip-Hop</option>
+                        <option value="r&b">R&B</option>
+                        <option value="edm">EDM / House</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="classical">Clássica</option>
+                        <option value="blues">Blues</option>
+                        <option value="country">Country</option>
+                        <option value="world">World Music</option>
+                        <option value="experimental">Experimental</option>
+                        <option value="phonk">Phonk</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Descrição do Projeto *</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Descreva o que você precisa, estilo musical, referências, prazo desejado..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="deadline">Prazo Desejado</label>
+                    <select id="deadline" name="deadline">
+                        <option value="">Prazo do Pacote (padrão)</option>
+                        <option value="urgent" data-fee="20">Urgente + 20%</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeGhostProducerModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Funções para o modal de Ghost Producer
+function openGhostProducerModal() {
+    document.getElementById('ghostProducerModal').style.display = 'block';
+}
+
+function closeGhostProducerModal() {
+    document.getElementById('ghostProducerModal').style.display = 'none';
+}
+
+// Fechar modal ao clicar fora
+window.onclick = function(event) {
+    const modal = document.getElementById('ghostProducerModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Enviar formulário de Ghost Producer
+document.getElementById('ghostProducerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const selectedPackage = document.querySelector('input[name="package"]:checked');
+    if (!selectedPackage) {
+        alert('Por favor, selecione um pacote');
+        return;
+    }
+    
+    const formData = {
+        package: selectedPackage.value,
+        genre: document.getElementById('genre').value,
+        description: document.getElementById('description').value,
+        deadline: document.getElementById('deadline').value
+    };
+    
+    fetch('/api/request-ghost-producer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            closeGhostProducerModal();
+            location.reload(); // Recarregar para mostrar nova solicitação
+        } else {
+            alert('Erro: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao enviar solicitação');
+    });
+});
+
+// Seleção de pacote com feedback visual
+document.querySelectorAll('.package-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // Remover seleção anterior
+        document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+        
+        // Selecionar pacote atual
+        this.classList.add('selected');
+        
+        // Marcar radio button
+        const radio = this.querySelector('input[type="radio"]');
+        radio.checked = true;
+    });
+});
+
+// Marcar tutorial como assistido quando clicado
+function markTutorialAsWatched(tutorialId) {
+    fetch('/api/mark-tutorial-watched', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tutorial_id: tutorialId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Tutorial marcado como assistido');
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+}
+
+// Função para excluir uma solicitação de ghost producer
+function deleteGhostRequest(requestId) {
+    if (confirm('Tem certeza que deseja excluir esta solicitação de Ghost Producer?')) {
+        fetch('/api/delete-ghost-request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ request_id: requestId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload(); // Recarregar a página para mostrar a lista atualizada
+            } else {
+                alert('Erro ao excluir solicitação: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir solicitação');
+        });
+    }
+}
+</script>
+{% endblock %}

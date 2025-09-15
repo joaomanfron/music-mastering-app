@@ -1,0 +1,598 @@
+{% extends "base.html" %}
+
+{% block title %}Masterização - Plataforma para Produtores Musicais{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <header class="page-header">
+        <h1>🎛️ Masterização Avançada</h1>
+        <p>Preview em tempo real • Waveforms • Controles personalizáveis</p>
+    </header>
+
+    <!-- Seção de Explicação -->
+    <div class="explanation-section">
+        <div class="explanation-content">
+            <h2>🔍 Como Funciona a Masterização?</h2>
+            <div class="explanation-grid">
+                <div class="explanation-item">
+                    <div class="explanation-icon">📤</div>
+                    <h3>1. Upload da Música</h3>
+                    <p>Envie sua música em WAV ou MP3. O sistema analisa o áudio e gera um waveform visual.</p>
+                </div>
+                
+                <div class="explanation-item">
+                    <div class="explanation-icon">🎯</div>
+                    <h3>2. Referência (Opcional)</h3>
+                    <p>Compare com uma música já masterizada ou use um link do YouTube como referência de qualidade.</p>
+                </div>
+                
+                <div class="explanation-item">
+                    <div class="explanation-icon">⚙️</div>
+                    <h3>3. Processamento Inteligente</h3>
+                    <p>O sistema aplica automaticamente: filtros de frequência, compressão, ganho e limitação para otimizar o som.</p>
+                </div>
+                
+                <div class="explanation-item">
+                    <div class="explanation-icon">🎵</div>
+                    <h3>4. Controles Personalizáveis</h3>
+                    <p>Ajuste compressor, gain e limiter em tempo real. Veja as mudanças instantaneamente no waveform.</p>
+                </div>
+                
+                <div class="explanation-item">
+                    <div class="explanation-icon">📊</div>
+                    <h3>5. Visualização Avançada</h3>
+                    <p>Compare os waveforms original vs. masterizado. Veja exatamente como sua música foi processada.</p>
+                </div>
+                
+                <div class="explanation-item">
+                    <div class="explanation-icon">💾</div>
+                    <h3>6. Download Final</h3>
+                    <p>Baixe sua música masterizada em alta qualidade. O sistema preserva a dinâmica natural do som.</p>
+                </div>
+            </div>
+            
+            <div class="tech-info">
+                <h3>🛠️ Tecnologia Utilizada</h3>
+                <p><strong>Algoritmos Profissionais:</strong> Filtros de frequência (30Hz-18kHz), compressão inteligente, normalização adaptativa e limitação de picos para evitar distorção.</p>
+                <p><strong>Qualidade:</strong> Processamento em 24-bit para máxima fidelidade sonora.</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+    <div class="upload-section">
+        <form method="POST" enctype="multipart/form-data" id="uploadForm" action="{{ url_for('processar_masterizacao') }}">
+            <div class="target-music-section">
+                <h3>🎵 Música para Masterizar</h3>
+                <div class="file-upload">
+                    <div class="upload-area">
+                        <div class="upload-icon">📁</div>
+                        <h4>Selecione o arquivo que você quer masterizar</h4>
+                        <p>Arraste ou clique para selecionar</p>
+                        <span class="file-info">Formatos aceitos: WAV, MP3</span>
+                        <input type="file" id="target_file" name="target_file" accept=".wav,.mp3" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reference-section" id="reference-step" style="display: none;">
+                <h3>🎯 Referência de Masterização</h3>
+                <p>Escolha entre um arquivo de referência ou um link do YouTube para comparar com sua música.</p>
+                
+                <div class="reference-buttons">
+                    <button type="button" id="btn-ref-file" class="ref-btn active">Arquivo de Referência</button>
+                    <button type="button" id="btn-ref-youtube" class="ref-btn">Link do YouTube</button>
+                </div>
+                
+                <div id="reference-file-section">
+                    <div class="file-upload" id="file_upload_section">
+                        <div class="upload-area">
+                            <div class="upload-icon">📁</div>
+                            <h4>Arquivo de Referência</h4>
+                            <p>Selecione uma música já masterizada</p>
+                            <span class="file-info">Formatos aceitos: WAV, MP3</span>
+                            <input type="file" id="reference_file" name="reference_file" accept=".wav,.mp3">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reference-youtube-section" style="display: none;">
+                    <div class="youtube-input-section">
+                        <div class="youtube-input-area">
+                            <div class="upload-icon">🎥</div>
+                            <h4>Link do YouTube</h4>
+                            <p>Cole o link de uma música do YouTube como referência</p>
+                            <div class="youtube-input-group">
+                                <input type="url" id="youtube_url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=..." class="youtube-url-input">
+                                <button type="button" id="validateYoutubeBtn" class="validate-youtube-btn">
+                                    <i class="fas fa-check"></i> Validar
+                                </button>
+                            </div>
+                            <span class="youtube-info" id="youtube_info">Cole um link válido do YouTube</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                <span class="btn-icon">⚡</span>
+                <span class="btn-text">Processar Música</span>
+            </button>
+        </form>
+    </div>
+
+    <div id="resultsSection" class="results-section" style="display: none;">
+        <h2>🎛️ Controles de Masterização</h2>
+        
+        <div class="controls-grid">
+            <div class="control-group">
+                <h3>Compressor</h3>
+                <label><input type="checkbox" id="use_compressor" checked> Usar Compressor</label>
+                <div class="slider-group">
+                    <label>Threshold (dB): <span id="compressor_threshold_value">-25</span></label>
+                    <input type="range" id="compressor_threshold" min="-50" max="0" value="-25" step="1">
+                </div>
+                <div class="slider-group">
+                    <label>Ratio: <span id="compressor_ratio_value">1.5</span></label>
+                    <input type="range" id="compressor_ratio" min="1" max="10" value="1.5" step="0.1">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Gain</h3>
+                <div class="slider-group">
+                    <label>Gain (dB): <span id="gain_db_value">1.0</span></label>
+                    <input type="range" id="gain_db" min="-10" max="10" value="1" step="0.1">
+                </div>
+                <h3>Limiter</h3>
+                <label><input type="checkbox" id="use_limiter" checked> Usar Limiter</label>
+                <div class="slider-group">
+                    <label>Threshold (dB): <span id="limiter_threshold_value">-0.5</span></label>
+                    <input type="range" id="limiter_threshold" min="-5" max="0" value="-0.5" step="0.1">
+                </div>
+            </div>
+        </div>
+
+        <button id="applyChangesBtn" class="apply-btn">
+            <span class="btn-icon">🔄</span> Aplicar Mudanças
+        </button>
+
+        <div class="audio-preview-section">
+            <h3>🎧 Preview de Áudio</h3>
+            <div class="audio-grid">
+                <div class="audio-item">
+                    <h4>Original</h4>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="audio-item">
+                    <h4>Masterizado</h4>
+                    <audio id="masteredAudio" controls></audio>
+                </div>
+            </div>
+        </div>
+
+        <div class="waveform-section">
+            <h3>📊 Visualização de Waveform</h3>
+            <div class="waveform-grid">
+                <div class="waveform-item">
+                    <h4>Original</h4>
+                    <img id="originalWaveform" class="waveform-img" alt="Waveform Original">
+                </div>
+                <div class="waveform-item">
+                    <h4>Masterizado</h4>
+                    <img id="masteredWaveform" class="waveform-img" alt="Waveform Masterizado">
+                </div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h3>💾 Download</h3>
+            <button id="downloadBtn" class="download-btn">
+                <span class="btn-icon">⬇️</span> Baixar Arquivo Masterizado
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- Tela de Loading -->
+<div id="loadingScreen" class="loading-screen" style="display: none;">
+    <div class="loading-content">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+        <h2>🎵 Masterizando sua música...</h2>
+        <p>Isso pode levar alguns minutos dependendo do tamanho do arquivo</p>
+        <div class="loading-progress">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <span class="progress-text">Processando...</span>
+        </div>
+        <div class="loading-steps">
+            <div class="step active">
+                <span class="step-icon">📁</span>
+                <span class="step-text">Carregando arquivo</span>
+            </div>
+            <div class="step">
+                <span class="step-icon">🎛️</span>
+                <span class="step-text">Aplicando masterização</span>
+            </div>
+            <div class="step">
+                <span class="step-icon">📊</span>
+                <span class="step-text">Gerando waveforms</span>
+            </div>
+            <div class="step">
+                <span class="step-icon">✅</span>
+                <span class="step-text">Finalizando</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentParams = {};
+        let currentTargetPath = '';
+        let currentSessionId = '';
+        let finalOutputFilename = '';
+        let referenceType = 'file'; // 'file' ou 'youtube'
+
+        const uploadForm = document.getElementById('uploadForm');
+        const targetFile_input = document.getElementById('target_file');
+        const referenceStep = document.getElementById('reference-step');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Habilitar o botão de processar apenas quando os arquivos necessários são selecionados
+        function validateForm() {
+            const targetFile = targetFile_input.files.length > 0;
+            let refValid = false;
+            
+            if (referenceType === 'file') {
+                const refFile = document.getElementById('reference_file').files.length > 0;
+                refValid = refFile;
+            } else if (referenceType === 'youtube') {
+                const youtubeUrl = document.getElementById('youtube_url').value.trim();
+                refValid = isValidYoutubeUrl(youtubeUrl);
+            }
+            
+            if (targetFile && refValid) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Função para validar URLs do YouTube
+        function isValidYoutubeUrl(url) {
+            if (!url) return false;
+            
+            // Padrões comuns de URLs do YouTube
+            const youtubePatterns = [
+                /^https?:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]+/i,
+                /^https?:\/\/(www\.)?youtube\.com\/embed\/[\w-]+/i,
+                /^https?:\/\/(www\.)?youtu\.be\/[\w-]+/i,
+                /^https?:\/\/(www\.)?youtube\.com\/v\/[\w-]+/i,
+                /^https?:\/\/(www\.)?youtube\.com\/shorts\/[\w-]+/i
+            ];
+            
+            return youtubePatterns.some(pattern => pattern.test(url));
+        }
+
+        // Função para extrair o ID do vídeo do YouTube
+        function extractYoutubeVideoId(url) {
+            if (!url) return null;
+            
+            // Padrões para extrair o ID do vídeo
+            const patterns = [
+                /[?&]v=([^&]+)/,
+                /\/embed\/([^?]+)/,
+                /\/v\/([^?]+)/,
+                /\/shorts\/([^?]+)/,
+                /youtu\.be\/([^?]+)/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            
+            return null;
+        }
+
+        // Mostrar nome do arquivo selecionado
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const fileName = this.files[0]?.name;
+                const uploadArea = this.closest('.file-upload').querySelector('.upload-area');
+                const fileInfo = uploadArea.querySelector('.file-info');
+                if (fileName) {
+                    fileInfo.textContent = `Arquivo: ${fileName}`;
+                    uploadArea.classList.add('has-file');
+                } else {
+                    fileInfo.textContent = `Formatos aceitos: WAV, MP3`;
+                    uploadArea.classList.remove('has-file');
+                }
+                validateForm();
+            });
+        });
+        
+        targetFile_input.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                referenceStep.style.display = 'block';
+            } else {
+                referenceStep.style.display = 'none';
+            }
+            validateForm();
+        });
+
+        // Configuração da seção de referência
+        const btnRefFile = document.getElementById('btn-ref-file');
+        const btnRefYoutube = document.getElementById('btn-ref-youtube');
+        const refFileSection = document.getElementById('reference-file-section');
+        const refYoutubeSection = document.getElementById('reference-youtube-section');
+        const refFileInput = document.getElementById('reference_file');
+        const youtubeUrlInput = document.getElementById('youtube_url');
+
+        btnRefFile.addEventListener('click', () => {
+            referenceType = 'file';
+            refFileSection.style.display = 'block';
+            refYoutubeSection.style.display = 'none';
+            btnRefFile.classList.add('active');
+            btnRefYoutube.classList.remove('active');
+            refFileInput.required = true;
+            youtubeUrlInput.required = false;
+            youtubeUrlInput.value = '';
+            validateForm();
+        });
+
+        btnRefYoutube.addEventListener('click', () => {
+            referenceType = 'youtube';
+            refFileSection.style.display = 'none';
+            refYoutubeSection.style.display = 'block';
+            btnRefYoutube.classList.add('active');
+            btnRefFile.classList.remove('active');
+            refFileInput.required = false;
+            youtubeUrlInput.required = true;
+            refFileInput.value = '';
+            validateForm();
+        });
+
+        // Validação do link do YouTube
+        document.getElementById('validateYoutubeBtn').addEventListener('click', function() {
+            const url = youtubeUrlInput.value.trim();
+            const youtubeInfo = document.getElementById('youtube_info');
+            
+            if (url && isValidYoutubeUrl(url)) {
+                const videoId = extractYoutubeVideoId(url);
+                youtubeInfo.textContent = `✅ Link válido do YouTube (ID: ${videoId})`;
+                youtubeInfo.className = 'youtube-info valid';
+                validateForm();
+            } else {
+                youtubeInfo.textContent = '❌ Link inválido do YouTube. Use formatos como: youtube.com/watch?v=..., youtu.be/..., youtube.com/shorts/...';
+                youtubeInfo.className = 'youtube-info invalid';
+                validateForm();
+            }
+        });
+
+        // Validação em tempo real do input do YouTube
+        youtubeUrlInput.addEventListener('input', function() {
+            const url = this.value.trim();
+            const youtubeInfo = document.getElementById('youtube_info');
+            
+            if (url.length === 0) {
+                youtubeInfo.textContent = 'Cole um link válido do YouTube';
+                youtubeInfo.className = 'youtube-info';
+            } else if (isValidYoutubeUrl(url)) {
+                const videoId = extractYoutubeVideoId(url);
+                youtubeInfo.textContent = `✅ Link válido do YouTube (ID: ${videoId})`;
+                youtubeInfo.className = 'youtube-info valid';
+            } else {
+                youtubeInfo.textContent = '❌ Link inválido do YouTube';
+                youtubeInfo.className = 'youtube-info invalid';
+            }
+            
+            validateForm();
+        });
+        
+        // Envio do formulário com AJAX
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Mostrar tela de loading
+            showLoadingScreen();
+            
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnIcon = submitBtn.querySelector('.btn-icon');
+            
+            submitBtn.disabled = true;
+            btnText.textContent = 'Processando...';
+            btnIcon.textContent = '⏳';
+            submitBtn.classList.add('loading');
+            
+            const formData = new FormData(this);
+            
+            // Adicionar o tipo de referência ao formData
+            formData.append('reference_type', referenceType);
+
+            fetch('{{ url_for("processar_masterizacao") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Esconder tela de loading
+                    hideLoadingScreen();
+                    
+                    document.getElementById('resultsSection').style.display = 'block';
+                    
+                    document.getElementById('originalWaveform').src = 'data:image/png;base64,' + data.original_waveform;
+                    document.getElementById('masteredWaveform').src = 'data:image/png;base64,' + data.mastered_waveform;
+                    
+                    currentSessionId = data.session_id;
+                    finalOutputFilename = data.output_filename; // Salvar nome do arquivo final
+                    
+                    const originalAudio = document.getElementById('originalAudio');
+                    const masteredAudio = document.getElementById('masteredAudio');
+                    
+                    originalAudio.src = `/audio/original/${currentSessionId}?v=${new Date().getTime()}`;
+                    masteredAudio.src = `/audio/mastered/${currentSessionId}?v=${new Date().getTime()}`;
+                    
+                    currentParams = data.params;
+                    currentTargetPath = data.target_path;
+                    
+                    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Esconder tela de loading em caso de erro
+                    hideLoadingScreen();
+                    alert('Erro: ' + data.error);
+                }
+            })
+            .catch(error => {
+                // Esconder tela de loading em caso de erro
+                hideLoadingScreen();
+                console.error('Fetch error:', error);
+                alert('Erro de comunicação com o servidor.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Processar Música';
+                btnIcon.textContent = '⚡';
+                submitBtn.classList.remove('loading');
+                validateForm();
+            });
+        });
+
+        // Funções para controlar a tela de loading
+        function showLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.display = 'flex';
+            
+            // Iniciar animação dos passos
+            startLoadingSteps();
+        }
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.display = 'none';
+            
+            // Resetar passos
+            resetLoadingSteps();
+        }
+
+        function startLoadingSteps() {
+            const steps = document.querySelectorAll('.step');
+            let currentStep = 0;
+            
+            const stepInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    // Ativar passo atual
+                    steps.forEach((step, index) => {
+                        if (index <= currentStep) {
+                            step.classList.add('active');
+                        } else {
+                            step.classList.remove('active');
+                        }
+                    });
+                    
+                    // Atualizar texto de progresso
+                    const progressText = document.querySelector('.progress-text');
+                    const stepTexts = [
+                        'Carregando arquivo...',
+                        'Aplicando masterização...',
+                        'Gerando waveforms...',
+                        'Finalizando...'
+                    ];
+                    
+                    if (progressText && stepTexts[currentStep]) {
+                        progressText.textContent = stepTexts[currentStep];
+                    }
+                    
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                }
+            }, 1500); // Mudar passo a cada 1.5 segundos
+        }
+
+        function resetLoadingSteps() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                if (index === 0) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+            
+            const progressText = document.querySelector('.progress-text');
+            if (progressText) {
+                progressText.textContent = 'Processando...';
+            }
+        }
+
+        // Atualizar valores dos sliders
+        function updateSliderValues() {
+            document.getElementById('compressor_threshold_value').textContent = document.getElementById('compressor_threshold').value;
+            document.getElementById('compressor_ratio_value').textContent = document.getElementById('compressor_ratio').value;
+            document.getElementById('gain_db_value').textContent = document.getElementById('gain_db').value;
+            document.getElementById('limiter_threshold_value').textContent = document.getElementById('limiter_threshold').value;
+        }
+
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', updateSliderValues);
+        });
+
+        // Aplicar mudanças
+        document.getElementById('applyChangesBtn').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="btn-icon">⏳</span> Aplicando...';
+            
+            const params = {
+                use_compressor: document.getElementById('use_compressor').checked,
+                compressor_threshold: parseFloat(document.getElementById('compressor_threshold').value),
+                compressor_ratio: parseFloat(document.getElementById('compressor_ratio').value),
+                gain_db: parseFloat(document.getElementById('gain_db').value),
+                use_limiter: document.getElementById('use_limiter').checked,
+                limiter_threshold: parseFloat(document.getElementById('limiter_threshold').value),
+            };
+            
+            fetch('{{ url_for("masterize") }}', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ params, target_path: currentTargetPath, session_id: currentSessionId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('masteredWaveform').src = 'data:image/png;base64,' + data.mastered_waveform;
+                    document.getElementById('masteredAudio').src = `/audio/mastered/${currentSessionId}?v=${new Date().getTime()}`;
+                    finalOutputFilename = data.output_filename; // Atualiza o nome do arquivo ao aplicar mudanças
+                    currentParams = params;
+                } else {
+                    alert('Erro ao aplicar mudanças: ' + data.error);
+                }
+            })
+            .catch(error => alert('Erro: ' + error))
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            });
+        });
+
+        // Download do arquivo final
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            if(finalOutputFilename) {
+                window.location.href = `/download/${finalOutputFilename}`;
+            } else {
+                alert("Nenhum arquivo processado para baixar.");
+            }
+        });
+    });
+</script>
+    </main>
+</div>
+{% endblock %}

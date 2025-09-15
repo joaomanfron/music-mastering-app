@@ -1,8 +1,8 @@
-flask
-librosa
-soundfile
-numpy
-matplotlib
-pedalboard
-werkzeug
-yt_dlp
+flask>=2.0.0
+flask-login>=0.6.0
+librosa>=0.10.0
+soundfile>=0.12.1
+numpy>=1.21.0
+matplotlib>=3.4.0
+pedalboard>=0.6.4
+werkzeug>=2.0.0

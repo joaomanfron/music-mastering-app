@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+
+{% block title %}Tutoriais - MusicPro{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header" style="padding: 8rem 0 4rem; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);">
+    <div class="container">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📚 Tutoriais e dicas de Produção Musical</h1>
+        <p style="font-size: 1.3rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Aprenda técnicas profissionais de produção, mixagem e masterização com os melhores produtores brasileiros</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Tutorials Section -->
+    <section class="section">
+        <div class="container">
+            <div class="tutorials-grid" id="tutorials-container">
+                <!-- Os tutoriais serão carregados aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="section features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📖 Recursos Adicionais</h2>
+                <p class="section-subtitle">Complemente seus estudos com materiais exclusivos e recomendações profissionais</p>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>Canais Recomendados</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                            <a href="https://www.youtube.com/@pmmbeats" target="_blank" style="color: var(--primary-color); text-decoration: none;">PMM</a>
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                            <a href="https://www.youtube.com/c/ProduceLikeAPro" target="_blank" style="color: var(--primary-color); text-decoration: none;">Produce Like A Pro</a>
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                            <a href="https://www.youtube.com/c/RecordingRevolution" target="_blank" style="color: var(--primary-color); text-decoration: none;">Recording Revolution</a>
+                        </li>
+                        <li style="padding: 0.5rem 0;">
+                            <a href="https://www.youtube.com/c/ADSR" target="_blank" style="color: var(--primary-color); text-decoration: none;">ADSR</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Livros Recomendados</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"Mixing Secrets for the Small Studio" - Mike Senior</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"The Mixing Engineer's Handbook" - Bobby Owsinski</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"Mastering Audio" - Bob Katz</li>
+                        <li style="padding: 0.5rem 0; color: var(--text-secondary);">"The Art of Mixing" - David Gibson</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Software Recomendado</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">DAWs: FL Studio, Logic Pro, Pro Tools, Ableton Live</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">Plugins: Waves, FabFilter, iZotope, Vital, Endless Smile</li>
+                        <li style="padding: 0.5rem 0; color: var(--text-secondary);">Gratuitos: Reaper, Audacity, LMMS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if not current_user.is_authenticated %}
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Quer mais conteúdo?</h2>
+                <p class="section-subtitle">Faça login para acessar tutoriais exclusivos e conteúdo premium</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Criar Conta
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
+                </a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</main>
+
+<!-- Template para os cards de tutorial -->
+<template id="tutorial-template">
+    <div class="tutorial-card">
+        <div class="tutorial-header">
+            <h3 class="tutorial-title"></h3>
+            <div class="tutorial-meta">
+                <span class="tutorial-channel"></span>
+                <span class="tutorial-stats">
+                    <i class="fas fa-eye"></i> <span class="view-count"></span>
+                    <i class="fas fa-thumbs-up"></i> <span class="like-count"></span>
+                </span>
+            </div>
+        </div>
+        <div class="video-thumbnail">
+            <img class="thumbnail-img" alt="Thumbnail do vídeo">
+            <div class="play-overlay">
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+        <div class="tutorial-footer">
+            <a href="#" class="btn btn-primary watch-btn" target="_blank">
+                <i class="fab fa-youtube"></i> Assistir Tutorial
+            </a>
+        </div>
+    </div>
+</template>
+
+<script>
+// Função para carregar os tutoriais
+async function loadTutorials() {
+    try {
+        const response = await fetch('/api/youtube-tutorials');
+        const data = await response.json();
+        
+        if (data.success) {
+            displayTutorials(data.tutorials, data.is_authenticated);
+        } else {
+            showError('Erro ao carregar tutoriais: ' + data.error);
+        }
+    } catch (error) {
+        showError('Erro ao conectar com o servidor: ' + error.message);
+    }
+}
+
+// Função para exibir os tutoriais
+function displayTutorials(tutorials, isAuthenticated = false) {
+    const container = document.getElementById('tutorials-container');
+    const template = document.getElementById('tutorial-template');
+    
+    // Limpa o container
+    container.innerHTML = '';
+    
+    if (tutorials.length === 0) {
+        container.innerHTML = `
+            <div class="tutorial-card" style="text-align: center; padding: 3rem;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                <p>Nenhum tutorial encontrado no momento.</p>
+            </div>
+        `;
+        return;
+    }
+    
+
+    
+    tutorials.forEach(tutorial => {
+        const clone = template.content.cloneNode(true);
+        
+        // Preenche os dados
+        clone.querySelector('.tutorial-title').textContent = tutorial.title;
+        clone.querySelector('.tutorial-channel').textContent = tutorial.channel;
+        clone.querySelector('.view-count').textContent = formatNumber(tutorial.view_count);
+        clone.querySelector('.like-count').textContent = formatNumber(tutorial.like_count);
+        
+        // Configura a thumbnail
+        const thumbnailImg = clone.querySelector('.thumbnail-img');
+        thumbnailImg.src = tutorial.thumbnail;
+        thumbnailImg.alt = tutorial.title;
+        
+        // Configura o link do YouTube
+        const watchBtn = clone.querySelector('.watch-btn');
+        watchBtn.href = `https://www.youtube.com/watch?v=${tutorial.id}`;
+        
+        // Adiciona evento de clique na thumbnail
+        const thumbnailContainer = clone.querySelector('.video-thumbnail');
+        thumbnailContainer.addEventListener('click', function() {
+            // Marcar tutorial como assistido se o usuário estiver logado
+            if (isAuthenticated) {
+                markTutorialAsWatched(tutorial.id);
+            }
+            window.open(`https://www.youtube.com/watch?v=${tutorial.id}`, '_blank');
+        });
+        
+        // Adiciona evento de clique no botão de assistir
+        const watchBtnElement = clone.querySelector('.watch-btn');
+        watchBtnElement.addEventListener('click', function(e) {
+            // Marcar tutorial como assistido se o usuário estiver logado
+            if (isAuthenticated) {
+                markTutorialAsWatched(tutorial.id);
+            }
+        });
+        
+        container.appendChild(clone);
+    });
+}
+
+// Função para marcar tutorial como assistido
+function markTutorialAsWatched(tutorialId) {
+    fetch('/api/mark-tutorial-watched', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tutorial_id: tutorialId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Tutorial marcado como assistido:', tutorialId);
+        } else {
+            console.error('Erro ao marcar tutorial:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao marcar tutorial:', error);
+    });
+}
+
+// Função para formatar números
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toString();
+}
+
+// Função para mostrar erros
+function showError(message) {
+    const container = document.getElementById('tutorials-container');
+    container.innerHTML = `
+        <div class="tutorial-card" style="text-align: center; padding: 3rem;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+            <p>${message}</p>
+            <button onclick="loadTutorials()" class="btn btn-primary" style="margin-top: 1rem;">
+                <i class="fas fa-redo"></i> Tentar Novamente
+            </button>
+        </div>
+    `;
+}
+
+// Carrega os tutoriais quando a página carrega
+document.addEventListener('DOMContentLoaded', loadTutorials);
+</script>
+
+<style>
+
+.tutorial-header {
+    margin-bottom: 1rem;
+}
+
+.tutorial-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.tutorial-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.tutorial-channel {
+    font-weight: 500;
+}
+
+.tutorial-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.tutorial-stats i {
+    margin-right: 0.25rem;
+}
+
+.tutorial-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.watch-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.watch-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover {
+    transform: scale(1.02);
+}
+
+.thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.video-thumbnail:hover .play-overlay {
+    background: rgba(255, 0, 0, 0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+}
+</style>
+{% endblock %}

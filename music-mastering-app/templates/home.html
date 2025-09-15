@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}MusicPro - Plataforma para Produtores Musicais{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Transforme sua música em arte profissional</h1>
+        <p>Descubra o poder da produção musical com nossa plataforma completa. Aprenda com tutoriais especializados, acesse serviços de ghost producer e domine a masterização com ferramentas avançadas.</p>
+        
+        <div class="hero-buttons">
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Começar Agora
+                </a>
+                <a href="{{ url_for('tutoriais') }}" class="btn btn-outline">
+                    <i class="fas fa-play"></i> Ver Tutoriais
+                </a>
+            {% else %}
+                <a href="{{ url_for('masterizacao') }}" class="btn btn-primary">
+                    <i class="fas fa-magic"></i> Masterizar Música
+                </a>
+                <a href="{{ url_for('servicos') }}" class="btn btn-outline">
+                    <i class="fas fa-star"></i> Nossos Serviços
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="section features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Por que escolher o MusicPro?</h2>
+            <p class="section-subtitle">Nossa plataforma oferece tudo que você precisa para se tornar um produtor musical profissional</p>
+        </div>
+        
+        <div class="resources-grid">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Aprenda com os Melhores</h3>
+                <p>Acesse tutoriais exclusivos criados por produtores profissionais com anos de experiência na indústria musical.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-ghost"></i>
+                </div>
+                <h3>Ghost Producer Premium</h3>
+                <p>Conecte-se com produtores talentosos que podem criar beats e instrumentais exclusivos para suas músicas.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <h3>Masterização Profissional</h3>
+                <p>Use nossa tecnologia avançada para masterizar suas músicas com qualidade de estúdio profissional.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Como Funciona</h2>
+            <p class="section-subtitle">Três passos simples para transformar sua música</p>
+        </div>
+        
+        <div class="resources-grid">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h3>1. Crie sua Conta</h3>
+                <p>Registre-se gratuitamente e tenha acesso a todos os recursos da plataforma em segundos.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>2. Aprenda e Cresça</h3>
+                <p>Explore nossos tutoriais, pratique com as ferramentas e desenvolva suas habilidades.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>3. Crie e Produza</h3>
+                <p>Use nossos serviços para criar músicas incríveis e masterizar com qualidade profissional.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if not current_user.is_authenticated %}
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Pronto para começar sua jornada musical?</h2>
+            <p class="section-subtitle">Junte-se a milhares de produtores que já transformaram suas carreiras com o MusicPro</p>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> Criar Conta Gratuita
+            </a>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Não é necessário cartão de crédito</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Stats Section -->
+<section class="section">
+    <div class="container">
+        <div class="resources-grid">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>10,000+</h3>
+                <p>Produtores ativos na plataforma</p>
+            </div>
+            
+            <div class="card" style="text-align: center;">
+                <div class="card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>500+</h3>
+                <p>Tutoriais e cursos disponíveis</p>
+            </div>
+            
+            <div class="card" style="text-align: center;">
+                <div class="card-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3>50,000+</h3>
+                <p>Músicas masterizadas com sucesso</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
