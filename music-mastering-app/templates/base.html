@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
 </head>
 <body>
-    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="flash-messages">
@@ -23,14 +23,13 @@
         {% endif %}
     {% endwith %}
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="{{ url_for('home') }}" class="navbar-brand">
-                <i class="fas fa-music"></i> MusicPro
+                <i class="fas fa-music"></i> SoundNest
             </a>
             
-            <button class="menu-toggle">
+            <button class="menu-toggle" type="button" aria-label="Abrir menu">
                 <i class="fas fa-bars"></i>
             </button>
             
@@ -65,16 +64,14 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3><i class="fas fa-music"></i> MusicPro</h3>
+                <h3><i class="fas fa-music"></i> SoundNest</h3>
                 <p>Sua plataforma completa para produção musical profissional. Tutoriais, serviços de ghost producer e masterização de qualidade.</p>
             </div>
             
@@ -87,7 +84,7 @@
             
             <div class="footer-section">
                 <h3>Contato</h3>
-                <p><i class="fas fa-envelope"></i> contato@musicpro.com</p>
+                <p><i class="fas fa-envelope"></i> contato@soundnest.com</p>
                 <p><i class="fas fa-phone"></i> +55 (11) 99999-9999</p>
                 <p><i class="fab fa-whatsapp"></i> WhatsApp</p>
             </div>
@@ -101,12 +98,11 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2024 MusicPro. Todos os direitos reservados.</p>
+            <p>&copy; 2025 SoundNest. Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <script>
-        // Auto-hide flash messages
         setTimeout(function() {
             const flashMessages = document.querySelectorAll('.flash-message');
             flashMessages.forEach(function(message) {
@@ -117,7 +113,23 @@
             });
         }, 5000);
 
-        // Smooth scrolling for navigation links
+        // Notificações simples reutilizáveis (success | error | info)
+        window.showToast = function(type, message) {
+            const container = document.querySelector('.flash-messages') || (function(){
+                const c = document.createElement('div');
+                c.className = 'flash-messages';
+                document.body.appendChild(c);
+                return c;
+            })();
+            const el = document.createElement('div');
+            el.className = 'flash-message ' + (type || 'info');
+            el.textContent = message || '';
+            container.appendChild(el);
+            setTimeout(function() {
+                el.style.opacity = '0';
+                setTimeout(function(){ el.remove(); }, 300);
+            }, 4500);
+        }
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -130,16 +142,12 @@
                 }
             });
         });
-
-        // Active navigation link
         const currentLocation = window.location.pathname;
         document.querySelectorAll('.nav-link').forEach(link => {
             if (link.getAttribute('href') === currentLocation) {
                 link.classList.add('active');
             }
         });
-
-        // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navbarNav = document.querySelector('.navbar-nav');
         
@@ -147,16 +155,12 @@
             menuToggle.addEventListener('click', function() {
                 navbarNav.classList.toggle('active');
             });
-            
-            // Close menu when clicking outside
             document.addEventListener('click', function(e) {
                 if (!menuToggle.contains(e.target) && !navbarNav.contains(e.target)) {
                     navbarNav.classList.remove('active');
                 }
             });
         }
-
-        // User dropdown toggle
         const userDropdownToggle = document.querySelector('.user-dropdown-toggle');
         const userDropdownMenu = document.querySelector('.user-dropdown-menu');
         
@@ -165,13 +169,9 @@
                 e.stopPropagation();
                 userDropdownMenu.classList.toggle('active');
             });
-            
-            // Close dropdown when clicking outside
             document.addEventListener('click', function() {
                 userDropdownMenu.classList.remove('active');
             });
-            
-            // Prevent dropdown from closing when clicking inside
             userDropdownMenu.addEventListener('click', function(e) {
                 e.stopPropagation();
             });

@@ -5,14 +5,15 @@
 {% block content %}
 <div class="page-container">
     <header class="page-header">
-        <h1>👻 Serviços de Ghost Producer</h1>
+        <h1>Serviços de Ghost Producer</h1>
         <p>Conecte-se com produtores profissionais para criar suas músicas</p>
     </header>
 
     <main class="main-content">
+    <div class="surface-panel">
     <section class="services-intro">
         <div class="intro-content">
-            <h2>🎯 O que é Ghost Production?</h2>
+            <h2>O que é Ghost Production?</h2>
             <p>Ghost production é quando um produtor musical cria uma música completa para você, mas permanece anônimo. Você recebe todos os direitos da música e pode lançá-la com seu nome.</p>
             
             <div class="benefits-grid">
@@ -43,64 +44,10 @@
         </div>
     </section>
 
-    <section class="services-packages">
-        <h2>📦 Nossos Pacotes</h2>
-        <div class="packages-grid">
-            <div class="package-card">
-                <div class="package-header">
-                    <h3>🎵 Básico</h3>
-                    <div class="package-price">A partir de R$ 500</div>
-                </div>
-                <ul class="package-features">
-                    <li>✓ Música completa (3-4 minutos)</li>
-                    <li>✓ Mixagem básica</li>
-                    <li>✓ 2 revisões</li>
-                    <li>✓ Até 7 dias</li>
-                    <li>✓ Arquivos WAV e MP3</li>
-                </ul>
-                <button class="btn btn-secondary package-btn" onclick="scrollToContact()">Solicitar Orçamento</button>
-            </div>
-
-            <div class="package-card featured">
-                <div class="package-badge">Mais Popular</div>
-                <div class="package-header">
-                    <h3>🎛️ Profissional</h3>
-                    <div class="package-price">A partir de R$ 800</div>
-                </div>
-                <ul class="package-features">
-                    <li>✓ Música completa (3-5 minutos)</li>
-                    <li>✓ Mixagem profissional</li>
-                    <li>✓ Masterização básica</li>
-                    <li>✓ 3 revisões</li>
-                    <li>✓ Até 5 dias</li>
-                    <li>✓ Arquivos WAV, MP3 e stems</li>
-                    <li>✓ Consultoria musical</li>
-                </ul>
-                <button class="btn btn-primary package-btn" onclick="scrollToContact()">Solicitar Orçamento</button>
-            </div>
-
-            <div class="package-card">
-                <div class="package-header">
-                    <h3>🏆 Premium</h3>
-                    <div class="package-price">A partir de R$ 1200</div>
-                </div>
-                <ul class="package-features">
-                    <li>✓ Música completa (3-6 minutos)</li>
-                    <li>✓ Mixagem premium</li>
-                    <li>✓ Masterização profissional</li>
-                    <li>✓ Revisões ilimitadas</li>
-                    <li>✓ Até 3 dias</li>
-                    <li>✓ Arquivos WAV, MP3, stems e projeto</li>
-                    <li>✓ Consultoria musical completa</li>
-                    <li>✓ Suporte prioritário</li>
-                </ul>
-                <button class="btn btn-secondary package-btn" onclick="scrollToContact()">Solicitar Orçamento</button>
-            </div>
-        </div>
-    </section>
+    
 
     <section class="genres-section">
-        <h2>🎼 Gêneros Musicais</h2>
+        <h2>Gêneros Musicais</h2>
         <p>Nossos produtores são especialistas em diversos gêneros musicais:</p>
         
         <div class="genres-grid">
@@ -120,16 +67,15 @@
     </section>
 
     <section class="contact-section" id="contact">
-        <h2>🎵 Solicitar Ghost Producer</h2>
+        <h2>Solicitar Ghost Producer</h2>
         <p>Escolha o pacote ideal e preencha os detalhes do seu projeto:</p>
         
-        <div class="contact-container">
-            <!-- Seleção de Pacote -->
-            <div class="package-selection">
+        <!-- Seleção de Pacote -->
+        <div class="package-selection">
                 <div class="packages-grid">
                     <div class="package-card" data-package="basico">
                         <div class="package-header">
-                            <h3>🎵 Básico</h3>
+                    <h3>Básico</h3>
                             <div class="package-price">A partir de R$ 500</div>
                         </div>
                         <ul class="package-features">
@@ -141,14 +87,14 @@
                         </ul>
                         <div class="package-selector">
                             <input type="radio" name="package" value="basico" id="pkg-basico-servicos">
-                            <label for="pkg-basico-servicos">Selecionar</label>
+                            <label for="pkg-basico-servicos" class="open-modal" data-package="basico">Selecionar</label>
                         </div>
                     </div>
 
                     <div class="package-card featured" data-package="profissional">
                         <div class="package-badge">Mais Popular</div>
                         <div class="package-header">
-                            <h3>🎛️ Profissional</h3>
+                            <h3>Profissional</h3>
                             <div class="package-price">A partir de R$ 800</div>
                         </div>
                         <ul class="package-features">
@@ -161,14 +107,14 @@
                             <li>✓ Consultoria musical</li>
                         </ul>
                         <div class="package-selector">
-                            <input type="radio" name="package" value="profissional" id="pkg-profissional-servicos" checked>
-                            <label for="pkg-profissional-servicos">Selecionar</label>
+                            <input type="radio" name="package" value="profissional" id="pkg-profissional-servicos">
+                            <label for="pkg-profissional-servicos" class="open-modal" data-package="profissional">Selecionar</label>
                         </div>
                     </div>
 
                     <div class="package-card" data-package="premium">
                         <div class="package-header">
-                            <h3>🏆 Premium</h3>
+                            <h3>Premium</h3>
                             <div class="package-price">A partir de R$ 1200</div>
                         </div>
                         <ul class="package-features">
@@ -183,63 +129,72 @@
                         </ul>
                         <div class="package-selector">
                             <input type="radio" name="package" value="premium" id="pkg-premium-servicos">
-                            <label for="pkg-premium-servicos">Selecionar</label>
+                            <label for="pkg-premium-servicos" class="open-modal" data-package="premium">Selecionar</label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Formulário de Solicitação -->
-            <form id="ghostProducerFormServicos" class="contact-form">
-                <div class="form-group">
-                    <label for="genre">Gênero Musical *</label>
-                    <select id="genre" name="genre" required>
-                        <option value="">Selecione um gênero</option>
-                        <option value="trap">Trap</option>
-                        <option value="drill">Drill</option>
-                        <option value="funk">Funk</option>
-                        <option value="sertanejo">Sertanejo</option>
-                        <option value="pop">Pop</option>
-                        <option value="rock">Rock</option>
-                        <option value="electronic">Electronic</option>
-                        <option value="hip-hop">Hip-Hop</option>
-                        <option value="r&b">R&B</option>
-                        <option value="edm">EDM / House</option>
-                        <option value="jazz">Jazz</option>
-                        <option value="classical">Clássica</option>
-                        <option value="blues">Blues</option>
-                        <option value="country">Country</option>
-                        <option value="world">World Music</option>
-                        <option value="experimental">Experimental</option>
-                        <option value="phonk">Phonk</option>
-                        <option value="outro">Outro</option>
-                    </select>
+        <!-- Modal de Solicitação -->
+        <div id="ghostModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Solicitar Ghost Producer</h3>
+                    <span class="close" id="ghostModalClose">&times;</span>
                 </div>
-                
-                <div class="form-group">
-                    <label for="description">Descrição do Projeto *</label>
-                    <textarea id="description" name="description" rows="6" placeholder="Descreva o que você precisa, estilo musical, referências, prazo desejado..." required></textarea>
+                <div class="modal-body">
+                    <form id="ghostProducerFormServicos" class="contact-form">
+                        <input type="hidden" id="selectedPackage" name="package" value="">
+                        <div class="form-group">
+                            <label for="genre">Gênero Musical *</label>
+                            <select id="genre" name="genre" required>
+                                <option value="">Selecione um gênero</option>
+                                <option value="trap">Trap</option>
+                                <option value="drill">Drill</option>
+                                <option value="funk">Funk</option>
+                                <option value="sertanejo">Sertanejo</option>
+                                <option value="pop">Pop</option>
+                                <option value="rock">Rock</option>
+                                <option value="electronic">Electronic</option>
+                                <option value="hip-hop">Hip-Hop</option>
+                                <option value="r&b">R&B</option>
+                                <option value="edm">EDM / House</option>
+                                <option value="jazz">Jazz</option>
+                                <option value="classical">Clássica</option>
+                                <option value="blues">Blues</option>
+                                <option value="country">Country</option>
+                                <option value="world">World Music</option>
+                                <option value="experimental">Experimental</option>
+                                <option value="phonk">Phonk</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descrição do Projeto *</label>
+                            <textarea id="description" name="description" rows="6" placeholder="Descreva o que você precisa, estilo musical, referências, prazo desejado..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="deadline">Prazo Desejado</label>
+                            <select id="deadline" name="deadline">
+                                <option value="">Prazo do Pacote (padrão)</option>
+                                <option value="urgent" data-fee="20">Urgente + 20%</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">Enviar Solicitação</button>
+                    </form>
                 </div>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label for="deadline">Prazo Desejado</label>
-                    <select id="deadline" name="deadline">
-                        <option value="">Prazo do Pacote (padrão)</option>
-                        <option value="urgent" data-fee="20">Urgente + 20%</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-large">Enviar Solicitação</button>
-            </form>
-            
-            <div class="contact-info">
-                <h3>📱 Outras formas de contato</h3>
+        <!-- Contatos: full width -->
+        <div class="contact-info" style="margin-top: 2rem;">
+                <h3>Outras formas de contato</h3>
                 
                 <div class="contact-item">
                     <div class="contact-icon">📧</div>
                     <div>
                         <h4>E-mail</h4>
-                        <p>contato@produtoresmusicais.com</p>
+                        <p>contato@soundnest.com</p>
                     </div>
                 </div>
                 
@@ -262,7 +217,6 @@
                         <p>Sábado: 9h às 14h</p>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -290,6 +244,7 @@
             </div>
         </div>
         </section>
+    </div>
     </main>
 </div>
 
@@ -300,33 +255,54 @@ function scrollToContact() {
     });
 }
 
-// Seleção de pacote com feedback visual
+// Seleção de pacote com feedback visual e abertura do modal
 document.querySelectorAll('.package-card').forEach(card => {
-    card.addEventListener('click', function() {
-        // Remover seleção anterior
+    card.addEventListener('click', function(e) {
         document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-        
-        // Selecionar pacote atual
         this.classList.add('selected');
-        
-        // Marcar radio button
         const radio = this.querySelector('input[type="radio"]');
-        radio.checked = true;
+        if (radio) radio.checked = true;
     });
+});
+
+function openGhostModal(pkg) {
+    const modal = document.getElementById('ghostModal');
+    const hiddenPkg = document.getElementById('selectedPackage');
+    if (hiddenPkg) hiddenPkg.value = pkg || '';
+    if (modal) modal.style.display = 'block';
+}
+
+function closeGhostModal() {
+    const modal = document.getElementById('ghostModal');
+    if (modal) modal.style.display = 'none';
+}
+
+document.querySelectorAll('.open-modal').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const pkg = this.getAttribute('data-package');
+        openGhostModal(pkg);
+    });
+});
+
+document.getElementById('ghostModalClose').addEventListener('click', closeGhostModal);
+window.addEventListener('click', function(e) {
+    const modal = document.getElementById('ghostModal');
+    if (e.target === modal) closeGhostModal();
 });
 
 // Enviar formulário de Ghost Producer
 document.getElementById('ghostProducerFormServicos').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const selectedPackage = document.querySelector('input[name="package"]:checked');
+    const selectedPackage = document.getElementById('selectedPackage').value || (document.querySelector('input[name="package"]:checked')?.value);
     if (!selectedPackage) {
         alert('Por favor, selecione um pacote');
         return;
     }
     
     const formData = {
-        package: selectedPackage.value,
+        package: selectedPackage,
         genre: document.getElementById('genre').value,
         description: document.getElementById('description').value,
         deadline: document.getElementById('deadline').value
@@ -342,20 +318,17 @@ document.getElementById('ghostProducerFormServicos').addEventListener('submit', 
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message);
-            // Limpar formulário
+            if (window.showToast) showToast('success', data.message);
             document.getElementById('ghostProducerFormServicos').reset();
-            // Remover seleção visual
             document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-            // Marcar pacote profissional como padrão
-            document.getElementById('pkg-profissional-servicos').checked = true;
+            closeGhostModal();
         } else {
-            alert('Erro: ' + data.error);
+            if (window.showToast) showToast('error', 'Erro: ' + data.error);
         }
     })
     .catch(error => {
         console.error('Erro:', error);
-        alert('Erro ao enviar solicitação');
+        if (window.showToast) showToast('error', 'Erro ao enviar solicitação');
     });
 });
 </script>

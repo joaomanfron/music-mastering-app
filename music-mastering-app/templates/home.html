@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}MusicPro - Plataforma para Produtores Musicais{% endblock %}
+{% block title %}SoundNest - Plataforma para Produtores Musicais{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
 <section class="hero">
     <div class="container">
         <h1>Transforme sua música em arte profissional</h1>
@@ -14,9 +13,7 @@
                 <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
                     <i class="fas fa-rocket"></i> Começar Agora
                 </a>
-                <a href="{{ url_for('tutoriais') }}" class="btn btn-outline">
-                    <i class="fas fa-play"></i> Ver Tutoriais
-                </a>
+                <a href="{{ url_for('tutoriais') }}" class="btn btn-outline">Ver Tutoriais</a>
             {% else %}
                 <a href="{{ url_for('masterizacao') }}" class="btn btn-primary">
                     <i class="fas fa-magic"></i> Masterizar Música
@@ -29,11 +26,10 @@
     </div>
 </section>
 
-<!-- Features Section -->
 <section class="section features-section">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Por que escolher o MusicPro?</h2>
+            <h2 class="section-title">Por que escolher o SoundNest?</h2>
             <p class="section-subtitle">Nossa plataforma oferece tudo que você precisa para se tornar um produtor musical profissional</p>
         </div>
         
@@ -107,7 +103,7 @@
     <div class="container">
         <div class="section-header">
             <h2 class="section-title">Pronto para começar sua jornada musical?</h2>
-            <p class="section-subtitle">Junte-se a milhares de produtores que já transformaram suas carreiras com o MusicPro</p>
+            <p class="section-subtitle">Junte-se ao SoundNest e transforme sua música em arte profissional</p>
         </div>
         
         <div style="text-align: center;">
@@ -119,35 +115,4 @@
     </div>
 </section>
 {% endif %}
-
-<!-- Stats Section -->
-<section class="section">
-    <div class="container">
-        <div class="resources-grid">
-            <div class="card" style="text-align: center;">
-                <div class="card-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>10,000+</h3>
-                <p>Produtores ativos na plataforma</p>
-            </div>
-            
-            <div class="card" style="text-align: center;">
-                <div class="card-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <h3>500+</h3>
-                <p>Tutoriais e cursos disponíveis</p>
-            </div>
-            
-            <div class="card" style="text-align: center;">
-                <div class="card-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-                <h3>50,000+</h3>
-                <p>Músicas masterizadas com sucesso</p>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}
