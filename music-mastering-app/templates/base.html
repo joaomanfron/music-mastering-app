@@ -6,7 +6,7 @@
     <title>{% block title %}Plataforma para Produtores Musicais{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
 </head>
 <body>
@@ -14,9 +14,9 @@
         {% if messages %}
             <div class="flash-messages">
                 {% for category, message in messages %}
-                    <div class="flash-message {{ category }}">
+                    <div class="flash-message {{ category }}" style="opacity: 0; transform: translateX(100%); animation: slideInRight 0.3s ease forwards;">
                         <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
-                        {{ message }}
+                        <span>{{ message }}</span>
                     </div>
                 {% endfor %}
             </div>
@@ -103,17 +103,29 @@
     </footer>
 
     <script>
-        setTimeout(function() {
+        function closeToast(toastElement) {
+            toastElement.style.opacity = '0';
+            toastElement.style.transform = 'translateX(100%)';
+            setTimeout(function(){ 
+                if (toastElement.parentNode) {
+                    toastElement.remove(); 
+                }
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
             const flashMessages = document.querySelectorAll('.flash-message');
             flashMessages.forEach(function(message) {
-                message.style.opacity = '0';
+                message.style.cursor = 'pointer';
+                message.addEventListener('click', function() {
+                    closeToast(message);
+                });
                 setTimeout(function() {
-                    message.remove();
-                }, 300);
+                    closeToast(message);
+                }, 4000);
             });
-        }, 5000);
+        });
 
-        // Notificações simples reutilizáveis (success | error | info)
         window.showToast = function(type, message) {
             const container = document.querySelector('.flash-messages') || (function(){
                 const c = document.createElement('div');
@@ -123,12 +135,41 @@
             })();
             const el = document.createElement('div');
             el.className = 'flash-message ' + (type || 'info');
-            el.textContent = message || '';
+            el.style.cursor = 'pointer';
+            
+            const icons = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'info': 'fa-info-circle'
+            };
+            
+            const icon = document.createElement('i');
+            icon.className = 'fas ' + (icons[type] || icons['info']);
+            el.appendChild(icon);
+            
+            const text = document.createElement('span');
+            text.textContent = message || '';
+            el.appendChild(text);
+            
             container.appendChild(el);
-            setTimeout(function() {
-                el.style.opacity = '0';
-                setTimeout(function(){ el.remove(); }, 300);
-            }, 4500);
+            
+            el.addEventListener('click', function() {
+                closeToast(el);
+            });
+            
+            const autoCloseTimeout = setTimeout(function() {
+                closeToast(el);
+            }, 4000);
+            
+            el.addEventListener('mouseenter', function() {
+                clearTimeout(autoCloseTimeout);
+            });
+            
+            el.addEventListener('mouseleave', function() {
+                setTimeout(function() {
+                    closeToast(el);
+                }, 4000);
+            });
         }
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

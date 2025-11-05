@@ -4,55 +4,60 @@
 
 {% block content %}
 <div class="page-container">
-    <header class="page-header">
-        <h1>🎛️ Masterização Avançada</h1>
-        <p>Preview em tempo real • Waveforms • Controles personalizáveis</p>
+    <header class="page-header masterizacao-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+            <h1>Masterização Avançada</h1>
+            <p>Preview em tempo real • Waveforms • Controles personalizáveis</p>
+        </div>
     </header>
 
     <!-- Seção de Explicação -->
     <div class="explanation-section">
         <div class="explanation-content">
-            <h2>🔍 Como Funciona a Masterização?</h2>
+            <h2><i class="fas fa-question-circle"></i> Como Funciona a Masterização?</h2>
             <div class="explanation-grid">
                 <div class="explanation-item">
-                    <div class="explanation-icon">📤</div>
+                    <div class="explanation-icon"><i class="fas fa-upload"></i></div>
                     <h3>1. Upload da Música</h3>
                     <p>Envie sua música em WAV ou MP3. O sistema analisa o áudio e gera um waveform visual.</p>
                 </div>
                 
                 <div class="explanation-item">
-                    <div class="explanation-icon">🎯</div>
+                    <div class="explanation-icon"><i class="fas fa-bullseye"></i></div>
                     <h3>2. Referência (Opcional)</h3>
                     <p>Compare com uma música já masterizada ou use um link do YouTube como referência de qualidade.</p>
                 </div>
                 
                 <div class="explanation-item">
-                    <div class="explanation-icon">⚙️</div>
+                    <div class="explanation-icon"><i class="fas fa-cogs"></i></div>
                     <h3>3. Processamento Inteligente</h3>
                     <p>O sistema aplica automaticamente: filtros de frequência, compressão, ganho e limitação para otimizar o som.</p>
                 </div>
                 
                 <div class="explanation-item">
-                    <div class="explanation-icon">🎵</div>
+                    <div class="explanation-icon"><i class="fas fa-music"></i></div>
                     <h3>4. Controles Personalizáveis</h3>
                     <p>Ajuste compressor, gain e limiter em tempo real. Veja as mudanças instantaneamente no waveform.</p>
                 </div>
                 
                 <div class="explanation-item">
-                    <div class="explanation-icon">📊</div>
+                    <div class="explanation-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>5. Visualização Avançada</h3>
                     <p>Compare os waveforms original vs. masterizado. Veja exatamente como sua música foi processada.</p>
                 </div>
                 
                 <div class="explanation-item">
-                    <div class="explanation-icon">💾</div>
+                    <div class="explanation-icon"><i class="fas fa-download"></i></div>
                     <h3>6. Download Final</h3>
                     <p>Baixe sua música masterizada em alta qualidade. O sistema preserva a dinâmica natural do som.</p>
                 </div>
             </div>
             
             <div class="tech-info">
-                <h3>🛠️ Tecnologia Utilizada</h3>
+                <h3><i class="fas fa-tools"></i> Tecnologia Utilizada</h3>
                 <p><strong>Algoritmos Profissionais:</strong> Filtros de frequência (30Hz-18kHz), compressão inteligente, normalização adaptativa e limitação de picos para evitar distorção.</p>
                 <p><strong>Qualidade:</strong> Processamento em 24-bit para máxima fidelidade sonora.</p>
             </div>
@@ -63,10 +68,10 @@
     <div class="upload-section">
         <form method="POST" enctype="multipart/form-data" id="uploadForm" action="{{ url_for('processar_masterizacao') }}">
             <div class="target-music-section">
-                <h3>🎵 Música para Masterizar</h3>
+                <h3><i class="fas fa-music"></i> Música para Masterizar</h3>
                 <div class="file-upload">
                     <div class="upload-area">
-                        <div class="upload-icon">📁</div>
+                        <div class="upload-icon"><i class="fas fa-folder-open"></i></div>
                         <h4>Selecione o arquivo que você quer masterizar</h4>
                         <p>Arraste ou clique para selecionar</p>
                         <span class="file-info">Formatos aceitos: WAV, MP3</span>
@@ -76,7 +81,7 @@
             </div>
 
             <div class="reference-section" id="reference-step" style="display: none;">
-                <h3>🎯 Referência de Masterização</h3>
+                <h3><i class="fas fa-bullseye"></i> Referência de Masterização</h3>
                 <p>Escolha entre um arquivo de referência ou um link do YouTube para comparar com sua música.</p>
                 
                 <div class="reference-buttons">
@@ -87,7 +92,7 @@
                 <div id="reference-file-section">
                     <div class="file-upload" id="file_upload_section">
                         <div class="upload-area">
-                            <div class="upload-icon">📁</div>
+                            <div class="upload-icon"><i class="fas fa-folder-open"></i></div>
                             <h4>Arquivo de Referência</h4>
                             <p>Selecione uma música já masterizada</p>
                             <span class="file-info">Formatos aceitos: WAV, MP3</span>
@@ -99,7 +104,7 @@
                 <div id="reference-youtube-section" style="display: none;">
                     <div class="youtube-input-section">
                         <div class="youtube-input-area">
-                            <div class="upload-icon">🎥</div>
+                            <div class="upload-icon"><i class="fab fa-youtube"></i></div>
                             <h4>Link do YouTube</h4>
                             <p>Cole o link de uma música do YouTube como referência</p>
                             <div class="youtube-input-group">
@@ -115,14 +120,14 @@
             </div>
 
             <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                <span class="btn-icon">⚡</span>
+                <span class="btn-icon"><i class="fas fa-bolt"></i></span>
                 <span class="btn-text">Processar Música</span>
             </button>
         </form>
     </div>
 
     <div id="resultsSection" class="results-section" style="display: none;">
-        <h2>🎛️ Controles de Masterização</h2>
+        <h2><i class="fas fa-sliders-h"></i> Controles de Masterização</h2>
         
         <div class="controls-grid">
             <div class="control-group">
@@ -154,11 +159,11 @@
         </div>
 
         <button id="applyChangesBtn" class="apply-btn">
-            <span class="btn-icon">🔄</span> Aplicar Mudanças
+            <span class="btn-icon"><i class="fas fa-redo"></i></span> Aplicar Mudanças
         </button>
 
         <div class="audio-preview-section">
-            <h3>🎧 Preview de Áudio</h3>
+            <h3><i class="fas fa-headphones"></i> Preview de Áudio</h3>
             <div class="audio-grid">
                 <div class="audio-item">
                     <h4>Original</h4>
@@ -172,7 +177,7 @@
         </div>
 
         <div class="waveform-section">
-            <h3>📊 Visualização de Waveform</h3>
+            <h3><i class="fas fa-chart-line"></i> Visualização de Waveform</h3>
             <div class="waveform-grid">
                 <div class="waveform-item">
                     <h4>Original</h4>
@@ -186,9 +191,9 @@
         </div>
 
         <div class="download-section">
-            <h3>💾 Download</h3>
+            <h3><i class="fas fa-download"></i> Download</h3>
             <button id="downloadBtn" class="download-btn">
-                <span class="btn-icon">⬇️</span> Baixar Arquivo Masterizado
+                <span class="btn-icon"><i class="fas fa-download"></i></span> Baixar Arquivo Masterizado
             </button>
         </div>
     </div>
@@ -200,7 +205,7 @@
         <div class="loading-spinner">
             <div class="spinner"></div>
         </div>
-        <h2>🎵 Masterizando sua música...</h2>
+        <h2><i class="fas fa-music"></i> Masterizando sua música...</h2>
         <p>Isso pode levar alguns minutos dependendo do tamanho do arquivo</p>
         <div class="loading-progress">
             <div class="progress-bar">
@@ -210,19 +215,19 @@
         </div>
         <div class="loading-steps">
             <div class="step active">
-                <span class="step-icon">📁</span>
+                <span class="step-icon"><i class="fas fa-folder-open"></i></span>
                 <span class="step-text">Carregando arquivo</span>
             </div>
             <div class="step">
-                <span class="step-icon">🎛️</span>
+                <span class="step-icon"><i class="fas fa-sliders-h"></i></span>
                 <span class="step-text">Aplicando masterização</span>
             </div>
             <div class="step">
-                <span class="step-icon">📊</span>
+                <span class="step-icon"><i class="fas fa-chart-line"></i></span>
                 <span class="step-text">Gerando waveforms</span>
             </div>
             <div class="step">
-                <span class="step-icon">✅</span>
+                <span class="step-icon"><i class="fas fa-check"></i></span>
                 <span class="step-text">Finalizando</span>
             </div>
         </div>
@@ -364,11 +369,11 @@
             
             if (url && isValidYoutubeUrl(url)) {
                 const videoId = extractYoutubeVideoId(url);
-                youtubeInfo.textContent = `✅ Link válido do YouTube (ID: ${videoId})`;
+                youtubeInfo.innerHTML = `<i class="fas fa-check-circle"></i> Link válido do YouTube (ID: ${videoId})`;
                 youtubeInfo.className = 'youtube-info valid';
                 validateForm();
             } else {
-                youtubeInfo.textContent = '❌ Link inválido do YouTube. Use formatos como: youtube.com/watch?v=..., youtu.be/..., youtube.com/shorts/...';
+                youtubeInfo.innerHTML = '<i class="fas fa-times-circle"></i> Link inválido do YouTube. Use formatos como: youtube.com/watch?v=..., youtu.be/..., youtube.com/shorts/...';
                 youtubeInfo.className = 'youtube-info invalid';
                 validateForm();
             }
@@ -384,10 +389,10 @@
                 youtubeInfo.className = 'youtube-info';
             } else if (isValidYoutubeUrl(url)) {
                 const videoId = extractYoutubeVideoId(url);
-                youtubeInfo.textContent = `✅ Link válido do YouTube (ID: ${videoId})`;
+                youtubeInfo.innerHTML = `<i class="fas fa-check-circle"></i> Link válido do YouTube (ID: ${videoId})`;
                 youtubeInfo.className = 'youtube-info valid';
             } else {
-                youtubeInfo.textContent = '❌ Link inválido do YouTube';
+                youtubeInfo.innerHTML = '<i class="fas fa-times-circle"></i> Link inválido do YouTube';
                 youtubeInfo.className = 'youtube-info invalid';
             }
             
@@ -406,7 +411,7 @@
             
             submitBtn.disabled = true;
             btnText.textContent = 'Processando...';
-            btnIcon.textContent = '⏳';
+            btnIcon.innerHTML = '<i class="fas fa-hourglass-half"></i>';
             submitBtn.classList.add('loading');
             
             const formData = new FormData(this);
@@ -457,7 +462,7 @@
             .finally(() => {
                 submitBtn.disabled = false;
                 btnText.textContent = 'Processar Música';
-                btnIcon.textContent = '⚡';
+                btnIcon.innerHTML = '<i class="fas fa-bolt"></i>';
                 submitBtn.classList.remove('loading');
                 validateForm();
             });
@@ -549,7 +554,7 @@
             const originalText = btn.innerHTML;
             
             btn.disabled = true;
-            btn.innerHTML = '<span class="btn-icon">⏳</span> Aplicando...';
+            btn.innerHTML = '<span class="btn-icon"><i class="fas fa-hourglass-half"></i></span> Aplicando...';
             
             const params = {
                 use_compressor: document.getElementById('use_compressor').checked,

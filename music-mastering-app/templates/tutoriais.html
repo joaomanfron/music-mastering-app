@@ -3,50 +3,44 @@
 {% block title %}Tutoriais - SoundNest{% endblock %}
 
 {% block content %}
-<header class="page-header" style="padding: 8rem 0 4rem; text-align: center; background: rgba(255, 255, 255, 0.02);">
-    <div class="container">
-<h1 style="font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--text-primary);">Tutoriais e dicas de Produção Musical</h1>
-        <p style="font-size: 1.3rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Aprenda técnicas profissionais de produção, mixagem e masterização com os melhores produtores brasileiros</p>
-    </div>
-</header>
-
-<main class="main-content">
-    <!-- Tutorials Section -->
-    <section class="section">
-        <div class="container">
-            <div class="tutorials-grid" id="tutorials-container">
-                <!-- Os tutoriais serão carregados aqui -->
+<div class="page-container">
+    <header class="page-header tutoriais-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-graduation-cap"></i>
             </div>
+            <h1>Tutoriais e dicas de Produção Musical</h1>
+            <p>Aprenda técnicas profissionais de produção, mixagem e masterização com os melhores produtores brasileiros</p>
         </div>
-    </section>
+    </header>
 
-    <!-- Resources Section -->
-    <section class="section features-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Recursos Adicionais</h2>
-                <p class="section-subtitle">Complemente seus estudos com materiais exclusivos e recomendações profissionais</p>
-            </div>
-            
-            <div class="resources-grid">
+    <main class="main-content">
+        <div class="surface-panel">
+            <!-- Tutorials Section -->
+            <section class="tutorials-section">
+                <div class="tutorials-grid" id="tutorials-container">
+                    <!-- Os tutoriais serão carregados aqui -->
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section class="resources-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-book"></i> Recursos Adicionais</h2>
+                    <p class="section-subtitle">Complemente seus estudos com materiais exclusivos e recomendações profissionais</p>
+                </div>
+                
+                <div class="resources-grid">
                 <div class="card">
                     <div class="card-icon">
                         <i class="fab fa-youtube"></i>
                     </div>
                     <h3>Canais Recomendados</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                            <a href="https://www.youtube.com/@pmmbeats" target="_blank" style="color: var(--primary-color); text-decoration: none;">PMM</a>
-                        </li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                            <a href="https://www.youtube.com/c/ProduceLikeAPro" target="_blank" style="color: var(--primary-color); text-decoration: none;">Produce Like A Pro</a>
-                        </li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                            <a href="https://www.youtube.com/c/RecordingRevolution" target="_blank" style="color: var(--primary-color); text-decoration: none;">Recording Revolution</a>
-                        </li>
-                        <li style="padding: 0.5rem 0;">
-                            <a href="https://www.youtube.com/c/ADSR" target="_blank" style="color: var(--primary-color); text-decoration: none;">ADSR</a>
-                        </li>
+                    <ul class="resource-list">
+                        <li><a href="https://www.youtube.com/@pmmbeats" target="_blank">PMM</a></li>
+                        <li><a href="https://www.youtube.com/c/ProduceLikeAPro" target="_blank">Produce Like A Pro</a></li>
+                        <li><a href="https://www.youtube.com/c/RecordingRevolution" target="_blank">Recording Revolution</a></li>
+                        <li><a href="https://www.youtube.com/c/ADSR" target="_blank">ADSR</a></li>
                     </ul>
                 </div>
 
@@ -55,11 +49,11 @@
                         <i class="fas fa-book"></i>
                     </div>
                     <h3>Livros Recomendados</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"Mixing Secrets for the Small Studio" - Mike Senior</li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"The Mixing Engineer's Handbook" - Bobby Owsinski</li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">"Mastering Audio" - Bob Katz</li>
-                        <li style="padding: 0.5rem 0; color: var(--text-secondary);">"The Art of Mixing" - David Gibson</li>
+                    <ul class="resource-list">
+                        <li>"Mixing Secrets for the Small Studio" - Mike Senior</li>
+                        <li>"The Mixing Engineer's Handbook" - Bobby Owsinski</li>
+                        <li>"Mastering Audio" - Bob Katz</li>
+                        <li>"The Art of Mixing" - David Gibson</li>
                     </ul>
                 </div>
 
@@ -68,37 +62,36 @@
                         <i class="fas fa-laptop"></i>
                     </div>
                     <h3>Software Recomendado</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">DAWs: FL Studio, Logic Pro, Pro Tools, Ableton Live</li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">Plugins: Waves, FabFilter, iZotope, Vital, Endless Smile</li>
-                        <li style="padding: 0.5rem 0; color: var(--text-secondary);">Gratuitos: Reaper, Audacity, LMMS</li>
+                    <ul class="resource-list">
+                        <li>DAWs: FL Studio, Logic Pro, Pro Tools, Ableton Live</li>
+                        <li>Plugins: Waves, FabFilter, iZotope, Vital, Endless Smile</li>
+                        <li>Gratuitos: Reaper, Audacity, LMMS</li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
+            </section>
 
-    {% if not current_user.is_authenticated %}
-    <!-- CTA Section -->
-    <section class="section cta-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🚀 Quer mais conteúdo?</h2>
-                <p class="section-subtitle">Faça login para acessar tutoriais exclusivos e conteúdo premium</p>
-            </div>
-            
-            <div style="text-align: center;">
-                <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
-                    <i class="fas fa-rocket"></i> Criar Conta
-                </a>
-                <a href="{{ url_for('login') }}" class="btn btn-secondary">
-                    <i class="fas fa-sign-in-alt"></i> Fazer Login
-                </a>
-            </div>
+            {% if not current_user.is_authenticated %}
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-rocket"></i> Quer mais conteúdo?</h2>
+                    <p class="section-subtitle">Faça login para acessar tutoriais exclusivos e conteúdo premium</p>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                        <i class="fas fa-sign-in-alt"></i> Fazer Login
+                    </a>
+                </div>
+            </section>
+            {% endif %}
         </div>
-    </section>
-    {% endif %}
-</main>
+    </main>
+</div>
 
 <!-- Template para os cards de tutorial -->
 <template id="tutorial-template">
@@ -254,96 +247,4 @@ function showError(message) {
 // Carrega os tutoriais quando a página carrega
 document.addEventListener('DOMContentLoaded', loadTutorials);
 </script>
-
-<style>
-
-.tutorial-header {
-    margin-bottom: 1rem;
-}
-
-.tutorial-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.tutorial-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-.tutorial-channel {
-    font-weight: 500;
-}
-
-.tutorial-stats {
-    display: flex;
-    gap: 1rem;
-}
-
-.tutorial-stats i {
-    margin-right: 0.25rem;
-}
-
-.tutorial-footer {
-    margin-top: 1.5rem;
-    text-align: center;
-}
-
-.watch-btn {
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.watch-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
-}
-
-.video-thumbnail {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.video-thumbnail:hover {
-    transform: scale(1.02);
-}
-
-.thumbnail-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.play-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 1rem;
-    border-radius: 50%;
-    font-size: 2rem;
-    transition: all 0.3s ease;
-    opacity: 0.8;
-}
-
-.video-thumbnail:hover .play-overlay {
-    background: rgba(255, 0, 0, 0.9);
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 1;
-}
-</style>
 {% endblock %}

@@ -4,247 +4,261 @@
 
 {% block content %}
 <div class="page-container">
-    <header class="page-header">
-        <h1>Serviços de Ghost Producer</h1>
-        <p>Conecte-se com produtores profissionais para criar suas músicas</p>
+    <header class="page-header services-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h1>Serviços de Ghost Producer</h1>
+            <p>Conecte-se com produtores profissionais para criar suas músicas</p>
+        </div>
     </header>
 
     <main class="main-content">
-    <div class="surface-panel">
-    <section class="services-intro">
-        <div class="intro-content">
-            <h2>O que é Ghost Production?</h2>
-            <p>Ghost production é quando um produtor musical cria uma música completa para você, mas permanece anônimo. Você recebe todos os direitos da música e pode lançá-la com seu nome.</p>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">⚡</div>
-                    <h3>Qualidade Profissional</h3>
-                    <p>Músicas produzidas por profissionais experientes com equipamentos de estúdio.</p>
+        <div class="surface-panel">
+            <!-- Seção de Introdução -->
+            <section class="services-intro">
+                <div class="intro-content">
+                    <h2>O que é Ghost Production?</h2>
+                    <p>Ghost production é quando um produtor musical cria uma música completa para você, mas permanece anônimo. Você recebe todos os direitos da música e pode lançá-la com seu nome.</p>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+                            <h3>Qualidade Profissional</h3>
+                            <p>Músicas produzidas por profissionais experientes com equipamentos de estúdio.</p>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-music"></i></div>
+                            <h3>Estilo Personalizado</h3>
+                            <p>Produções feitas sob medida para seu estilo musical e preferências.</p>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-lock"></i></div>
+                            <h3>Direitos Completos</h3>
+                            <p>Você recebe 100% dos direitos da música para usar como quiser.</p>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h3>Suporte Contínuo</h3>
+                            <p>Acompanhamento durante todo o processo de criação e revisões.</p>
+                        </div>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Seção de Gêneros -->
+            <section class="genres-section">
+                <h2><i class="fas fa-music"></i> Gêneros Musicais</h2>
+                <p>Nossos produtores são especialistas em diversos gêneros musicais:</p>
                 
-                <div class="benefit-item">
-                    <div class="benefit-icon">🎵</div>
-                    <h3>Estilo Personalizado</h3>
-                    <p>Produções feitas sob medida para seu estilo musical e preferências.</p>
+                <div class="genres-grid">
+                    <div class="genre-item"><i class="fas fa-headphones"></i> EDM / House</div>
+                    <div class="genre-item"><i class="fas fa-microphone"></i> Pop</div>
+                    <div class="genre-item"><i class="fas fa-guitar"></i> Rock</div>
+                    <div class="genre-item"><i class="fas fa-music"></i> Hip Hop</div>
+                    <div class="genre-item"><i class="fas fa-music"></i> Jazz</div>
+                    <div class="genre-item"><i class="fas fa-music"></i> Clássica</div>
+                    <div class="genre-item"><i class="fas fa-music"></i> Blues</div>
+                    <div class="genre-item"><i class="fas fa-guitar"></i> Country</div>
+                    <div class="genre-item"><i class="fas fa-globe"></i> World Music</div>
+                    <div class="genre-item"><i class="fas fa-sliders-h"></i> Experimental</div>
+                    <div class="genre-item"><i class="fas fa-music"></i> Phonk</div>
+                    <div class="genre-item"><i class="fas fa-check-circle"></i> Mais de 100 estilos</div>
                 </div>
+            </section>
+
+            <!-- Seção de Pacotes e Solicitação -->
+            <section class="contact-section" id="contact">
+                <h2><i class="fas fa-shopping-cart"></i> Solicitar Ghost Producer</h2>
+                <p>Escolha o pacote ideal e preencha os detalhes do seu projeto:</p>
                 
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔒</div>
-                    <h3>Direitos Completos</h3>
-                    <p>Você recebe 100% dos direitos da música para usar como quiser.</p>
+                <!-- Seleção de Pacote -->
+                <div class="package-selection">
+                    <div class="packages-grid">
+                        <div class="package-card" data-package="basico">
+                            <div class="package-header">
+                                <h3>Básico</h3>
+                                <div class="package-price">A partir de R$ 500</div>
+                            </div>
+                            <ul class="package-features">
+                                <li>✓ Música completa (3-4 minutos)</li>
+                                <li>✓ Mixagem básica</li>
+                                <li>✓ 2 revisões</li>
+                                <li>✓ Até 7 dias</li>
+                                <li>✓ Arquivos WAV e MP3</li>
+                            </ul>
+                            <div class="package-selector">
+                                <input type="radio" name="package" value="basico" id="pkg-basico-servicos">
+                                <label for="pkg-basico-servicos" class="open-modal" data-package="basico">Selecionar</label>
+                            </div>
+                        </div>
+
+                        <div class="package-card featured" data-package="profissional">
+                            <div class="package-badge">Mais Popular</div>
+                            <div class="package-header">
+                                <h3>Profissional</h3>
+                                <div class="package-price">A partir de R$ 800</div>
+                            </div>
+                            <ul class="package-features">
+                                <li>✓ Música completa (3-5 minutos)</li>
+                                <li>✓ Mixagem profissional</li>
+                                <li>✓ Masterização básica</li>
+                                <li>✓ 3 revisões</li>
+                                <li>✓ Até 5 dias</li>
+                                <li>✓ Arquivos WAV, MP3 e stems</li>
+                                <li>✓ Consultoria musical</li>
+                            </ul>
+                            <div class="package-selector">
+                                <input type="radio" name="package" value="profissional" id="pkg-profissional-servicos">
+                                <label for="pkg-profissional-servicos" class="open-modal" data-package="profissional">Selecionar</label>
+                            </div>
+                        </div>
+
+                        <div class="package-card" data-package="premium">
+                            <div class="package-header">
+                                <h3>Premium</h3>
+                                <div class="package-price">A partir de R$ 1200</div>
+                            </div>
+                            <ul class="package-features">
+                                <li>✓ Música completa (3-6 minutos)</li>
+                                <li>✓ Mixagem premium</li>
+                                <li>✓ Masterização profissional</li>
+                                <li>✓ Revisões ilimitadas</li>
+                                <li>✓ Até 3 dias</li>
+                                <li>✓ Arquivos WAV, MP3, stems e projeto</li>
+                                <li>✓ Consultoria musical completa</li>
+                                <li>✓ Suporte prioritário</li>
+                            </ul>
+                            <div class="package-selector">
+                                <input type="radio" name="package" value="premium" id="pkg-premium-servicos">
+                                <label for="pkg-premium-servicos" class="open-modal" data-package="premium">Selecionar</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">📱</div>
-                    <h3>Suporte Contínuo</h3>
-                    <p>Acompanhamento durante todo o processo de criação e revisões.</p>
+
+                <!-- Modal de Solicitação -->
+                <div id="ghostModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-user-tie"></i> Solicitar Ghost Producer</h3>
+                            <span class="close" id="ghostModalClose">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="ghostProducerFormServicos" class="contact-form">
+                                <input type="hidden" id="selectedPackage" name="package" value="">
+                                <div class="form-group">
+                                    <label for="genre">Gênero Musical *</label>
+                                    <select id="genre" name="genre" required>
+                                        <option value="">Selecione um gênero</option>
+                                        <option value="trap">Trap</option>
+                                        <option value="drill">Drill</option>
+                                        <option value="funk">Funk</option>
+                                        <option value="sertanejo">Sertanejo</option>
+                                        <option value="pop">Pop</option>
+                                        <option value="rock">Rock</option>
+                                        <option value="electronic">Electronic</option>
+                                        <option value="hip-hop">Hip-Hop</option>
+                                        <option value="r&b">R&B</option>
+                                        <option value="edm">EDM / House</option>
+                                        <option value="jazz">Jazz</option>
+                                        <option value="classical">Clássica</option>
+                                        <option value="blues">Blues</option>
+                                        <option value="country">Country</option>
+                                        <option value="world">World Music</option>
+                                        <option value="experimental">Experimental</option>
+                                        <option value="phonk">Phonk</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Descrição do Projeto *</label>
+                                    <textarea id="description" name="description" rows="6" placeholder="Descreva o que você precisa, estilo musical, referências, prazo desejado..." required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="deadline">Prazo Desejado</label>
+                                    <select id="deadline" name="deadline">
+                                        <option value="">Prazo do Pacote (padrão)</option>
+                                        <option value="urgent" data-fee="20">Urgente + 20%</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-large">Enviar Solicitação</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Seção FAQ -->
+            <section class="faq-section">
+                <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>Como funciona o processo de ghost production?</h3>
+                        <p>Após o contato inicial, fazemos uma reunião para entender suas necessidades. O produtor cria a música, você recebe para avaliação e pode solicitar revisões. Após a aprovação final, você recebe todos os arquivos e direitos.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Posso usar a música em plataformas de streaming?</h3>
+                        <p>Sim! Você recebe 100% dos direitos da música e pode usá-la em qualquer plataforma, incluindo Spotify, Apple Music, YouTube, etc.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Quanto tempo leva para produzir uma música?</h3>
+                        <p>O tempo varia de 3 a 7 dias, dependendo do pacote escolhido e da complexidade da música. Sempre informamos o prazo estimado no orçamento.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Posso solicitar alterações na música?</h3>
+                        <p>Sim! Cada pacote inclui um número específico de revisões. Para o pacote Premium, as revisões são ilimitadas até sua aprovação final.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Informações de Contato -->
+            <section class="contact-info-section">
+                <div class="contact-info">
+                    <h3><i class="fas fa-envelope"></i> Outras formas de contato</h3>
+                    
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <div class="contact-card-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h4>E-mail</h4>
+                            <p>contato@soundnest.com</p>
+                            <a href="mailto:contato@soundnest.com" class="contact-btn">
+                                <i class="fas fa-envelope"></i> Enviar E-mail
+                            </a>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-card-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <h4>WhatsApp</h4>
+                            <p>+55 (11) 99999-9999</p>
+                            <a href="https://wa.me/5511999999999" target="_blank" class="contact-btn whatsapp-btn-new">
+                                <i class="fab fa-whatsapp"></i> Enviar Mensagem
+                            </a>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-card-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h4>Horário de Atendimento</h4>
+                            <p>Segunda a Sexta: 9h às 18h</p>
+                            <p>Sábado: 9h às 14h</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
-
-    
-
-    <section class="genres-section">
-        <h2>Gêneros Musicais</h2>
-        <p>Nossos produtores são especialistas em diversos gêneros musicais:</p>
-        
-        <div class="genres-grid">
-            <div class="genre-item">🎧 EDM / House</div>
-            <div class="genre-item">🎤 Pop</div>
-            <div class="genre-item">🎸 Rock</div>
-            <div class="genre-item">🎹 Hip Hop</div>
-            <div class="genre-item">🎷 Jazz</div>
-            <div class="genre-item">🎻 Clássica</div>
-            <div class="genre-item">🎺 Blues</div>
-            <div class="genre-item">🎼 Country</div>
-            <div class="genre-item">🌍 World Music</div>
-            <div class="genre-item">🎵 Experimental</div>
-            <div class="genre-item">💀 Phonk</div>
-            <div class="genre-item"> ✅ Mais de 100 estilos</div>
-        </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-        <h2>Solicitar Ghost Producer</h2>
-        <p>Escolha o pacote ideal e preencha os detalhes do seu projeto:</p>
-        
-        <!-- Seleção de Pacote -->
-        <div class="package-selection">
-                <div class="packages-grid">
-                    <div class="package-card" data-package="basico">
-                        <div class="package-header">
-                    <h3>Básico</h3>
-                            <div class="package-price">A partir de R$ 500</div>
-                        </div>
-                        <ul class="package-features">
-                            <li>✓ Música completa (3-4 minutos)</li>
-                            <li>✓ Mixagem básica</li>
-                            <li>✓ 2 revisões</li>
-                            <li>✓ Até 7 dias</li>
-                            <li>✓ Arquivos WAV e MP3</li>
-                        </ul>
-                        <div class="package-selector">
-                            <input type="radio" name="package" value="basico" id="pkg-basico-servicos">
-                            <label for="pkg-basico-servicos" class="open-modal" data-package="basico">Selecionar</label>
-                        </div>
-                    </div>
-
-                    <div class="package-card featured" data-package="profissional">
-                        <div class="package-badge">Mais Popular</div>
-                        <div class="package-header">
-                            <h3>Profissional</h3>
-                            <div class="package-price">A partir de R$ 800</div>
-                        </div>
-                        <ul class="package-features">
-                            <li>✓ Música completa (3-5 minutos)</li>
-                            <li>✓ Mixagem profissional</li>
-                            <li>✓ Masterização básica</li>
-                            <li>✓ 3 revisões</li>
-                            <li>✓ Até 5 dias</li>
-                            <li>✓ Arquivos WAV, MP3 e stems</li>
-                            <li>✓ Consultoria musical</li>
-                        </ul>
-                        <div class="package-selector">
-                            <input type="radio" name="package" value="profissional" id="pkg-profissional-servicos">
-                            <label for="pkg-profissional-servicos" class="open-modal" data-package="profissional">Selecionar</label>
-                        </div>
-                    </div>
-
-                    <div class="package-card" data-package="premium">
-                        <div class="package-header">
-                            <h3>Premium</h3>
-                            <div class="package-price">A partir de R$ 1200</div>
-                        </div>
-                        <ul class="package-features">
-                            <li>✓ Música completa (3-6 minutos)</li>
-                            <li>✓ Mixagem premium</li>
-                            <li>✓ Masterização profissional</li>
-                            <li>✓ Revisões ilimitadas</li>
-                            <li>✓ Até 3 dias</li>
-                            <li>✓ Arquivos WAV, MP3, stems e projeto</li>
-                            <li>✓ Consultoria musical completa</li>
-                            <li>✓ Suporte prioritário</li>
-                        </ul>
-                        <div class="package-selector">
-                            <input type="radio" name="package" value="premium" id="pkg-premium-servicos">
-                            <label for="pkg-premium-servicos" class="open-modal" data-package="premium">Selecionar</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        <!-- Modal de Solicitação -->
-        <div id="ghostModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Solicitar Ghost Producer</h3>
-                    <span class="close" id="ghostModalClose">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <form id="ghostProducerFormServicos" class="contact-form">
-                        <input type="hidden" id="selectedPackage" name="package" value="">
-                        <div class="form-group">
-                            <label for="genre">Gênero Musical *</label>
-                            <select id="genre" name="genre" required>
-                                <option value="">Selecione um gênero</option>
-                                <option value="trap">Trap</option>
-                                <option value="drill">Drill</option>
-                                <option value="funk">Funk</option>
-                                <option value="sertanejo">Sertanejo</option>
-                                <option value="pop">Pop</option>
-                                <option value="rock">Rock</option>
-                                <option value="electronic">Electronic</option>
-                                <option value="hip-hop">Hip-Hop</option>
-                                <option value="r&b">R&B</option>
-                                <option value="edm">EDM / House</option>
-                                <option value="jazz">Jazz</option>
-                                <option value="classical">Clássica</option>
-                                <option value="blues">Blues</option>
-                                <option value="country">Country</option>
-                                <option value="world">World Music</option>
-                                <option value="experimental">Experimental</option>
-                                <option value="phonk">Phonk</option>
-                                <option value="outro">Outro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Descrição do Projeto *</label>
-                            <textarea id="description" name="description" rows="6" placeholder="Descreva o que você precisa, estilo musical, referências, prazo desejado..." required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="deadline">Prazo Desejado</label>
-                            <select id="deadline" name="deadline">
-                                <option value="">Prazo do Pacote (padrão)</option>
-                                <option value="urgent" data-fee="20">Urgente + 20%</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-large">Enviar Solicitação</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contatos: full width -->
-        <div class="contact-info" style="margin-top: 2rem;">
-                <h3>Outras formas de contato</h3>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <div>
-                        <h4>E-mail</h4>
-                        <p>contato@soundnest.com</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <div>
-                        <h4>WhatsApp</h4>
-                        <p>+55 (11) 99999-9999</p>
-                        <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp-btn">
-                            📱 Enviar Mensagem
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">⏰</div>
-                    <div>
-                        <h4>Horário de Atendimento</h4>
-                        <p>Segunda a Sexta: 9h às 18h</p>
-                        <p>Sábado: 9h às 14h</p>
-                    </div>
-                </div>
-        </div>
-    </section>
-
-    <section class="faq-section">
-        <h2>❓ Perguntas Frequentes</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Como funciona o processo de ghost production?</h3>
-                <p>Após o contato inicial, fazemos uma reunião para entender suas necessidades. O produtor cria a música, você recebe para avaliação e pode solicitar revisões. Após a aprovação final, você recebe todos os arquivos e direitos.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>Posso usar a música em plataformas de streaming?</h3>
-                <p>Sim! Você recebe 100% dos direitos da música e pode usá-la em qualquer plataforma, incluindo Spotify, Apple Music, YouTube, etc.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>Quanto tempo leva para produzir uma música?</h3>
-                <p>O tempo varia de 3 a 7 dias, dependendo do pacote escolhido e da complexidade da música. Sempre informamos o prazo estimado no orçamento.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>Posso solicitar alterações na música?</h3>
-                <p>Sim! Cada pacote inclui um número específico de revisões. Para o pacote Premium, as revisões são ilimitadas até sua aprovação final.</p>
-            </div>
-        </div>
-        </section>
-    </div>
     </main>
 </div>
 
@@ -258,6 +272,10 @@ function scrollToContact() {
 // Seleção de pacote com feedback visual e abertura do modal
 document.querySelectorAll('.package-card').forEach(card => {
     card.addEventListener('click', function(e) {
+        // Não selecionar se clicar no botão diretamente
+        if (e.target.closest('.open-modal')) {
+            return;
+        }
         document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
         this.classList.add('selected');
         const radio = this.querySelector('input[type="radio"]');
@@ -297,7 +315,7 @@ document.getElementById('ghostProducerFormServicos').addEventListener('submit', 
     
     const selectedPackage = document.getElementById('selectedPackage').value || (document.querySelector('input[name="package"]:checked')?.value);
     if (!selectedPackage) {
-        alert('Por favor, selecione um pacote');
+        if (window.showToast) showToast('error', 'Por favor, selecione um pacote');
         return;
     }
     
